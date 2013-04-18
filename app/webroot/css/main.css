@@ -258,3 +258,10 @@ form:after {
     background-position: 0 -135px;
     color: #00aeef;
 }
+
+.main{
+    padding: 30px;
+    background-color: #fff;
+    border-left: 1px solid #eaeaea;
+    box-shadow: -1px 0 3px rgba(0,0,0,0.1);
+}

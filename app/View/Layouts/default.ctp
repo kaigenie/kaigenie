@@ -29,7 +29,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
     </title>
     <?php
     echo $this->Html->meta('icon');
-
+    echo $this->Html->css('cake.changed');
     echo $this->Html->css('bootstrap');
     echo $this->Html->css('bootstrap-responsive');
     echo $this->Html->css('main');
@@ -38,10 +38,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
     echo $this->fetch('script');
     ?>
     <style type="text/css">
-        body {
-            padding-top: 60px;
-            padding-bottom: 40px;
-        }
+
         .sidebar-nav {
             padding: 9px 0;
         }
@@ -70,7 +67,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
     </div>
 </div>
 
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-inverse">
     <div class="navbar-inner">
         <div class="container-fluid">
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -80,9 +77,17 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
             </button>
             <a class="brand" href="#">Project name</a>
             <div class="nav-collapse collapse">
+
+                <?php if($this->Access->loggedIn()){ ?>
+
                 <p class="navbar-text pull-right">
-                    Logged in as <a href="#" class="navbar-link">Username</a>
+                    Logged in as <a href="#" class="navbar-link">
+                    <?php echo $this->Access->getUsername() ?>
+
+                    </a>
                 </p>
+
+                <?php } ?>
                 <ul class="nav">
                     <li class="active"><a href="#">Home</a></li>
                     <li><a href="#about">About</a></li>
@@ -93,38 +98,48 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
     </div>
 </div>
 
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span3">
-            <div class="well sidebar-nav">
-                <ul class="nav nav-list">
-                    <li class="nav-header">Sidebar</li>
-                    <li class="active"><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="nav-header">Sidebar</li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
 
-                </ul>
-            </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9">
-            <?php echo $this->Session->flash(); ?>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span2"></div>
 
-            <?php echo $this->fetch('content'); ?>
 
-        </div><!--/span-->
-    </div><!--/row-->
+                    <div class="span2">
+                        <div class="well sidebar-nav">
+                            <ul class="nav nav-list">
+                                <li class="nav-header">Admin Setup</li>
+                                <li class="active"><a href="#">Link</a></li>
+                                <li><a href="#">Link</a></li>
+                                <li><a href="#">Link</a></li>
+                                <li><a href="#">Link</a></li>
+                                <li class="nav-header">Sidebar</li>
+                                <li><a href="#">Link</a></li>
+                                <li><a href="#">Link</a></li>
 
-    <hr>
+                            </ul>
+                        </div><!--/.well -->
+                    </div><!--/span-->
 
-    <footer>
-        <p>&copy; Company 2013</p>
-    </footer>
 
-</div><!--/.fluid-container-->
+
+
+
+                <div class="span6 main">
+                    <?php echo $this->Session->flash(); ?>
+
+                    <?php echo $this->fetch('content'); ?>
+
+                </div><!--/span-->
+                <div class="span2"></div>
+            </div><!--/row-->
+
+            <hr>
+
+            <footer>
+                <p>&copy; Company 2013</p>
+            </footer>
+
+        </div><!--/.fluid-container-->
 
 
 

@@ -1,19 +1,24 @@
 <div class="login-container">
     <section id="login-content">
-        <form action="/login">
-            <h1>Login</h1>
-            <div>
-                <input type="text" placeholder="Username" required="" id="username" />
-            </div>
-            <div>
-                <input type="password" placeholder="Password" required="" id="password" />
-            </div>
-            <div>
-                <input type="submit" value="Log in" />
-                <a href="#">Lost your password?</a>
-                <a href="#">Register</a>
-            </div>
-        </form><!-- form -->
+        <?php echo $this->Form->create('User'); ?>
+        <h1>Login</h1>
+        <div><?php echo $this->Form->input('username', array('placeholder' => 'Please input your username',
+                                                             'label'=>false,
+                                                             'id' => 'username',
+                                                             'div' => false)
+                                          ); ?></div>
+        <div><?php echo $this->Form->input('password', array('placeholder' => 'Password',
+                                                             'type'=>'password',
+                                                             'label' => false,
+                                                             'id' => 'password',
+                                                             'div' => false)
+                                            ); ?></div>
+        <div>
+            <input type="submit" value="Log in" />
+            <?php echo $this->Html->link($title='Lost your password?', $url='/iforgot') ?>
+            <?php echo $this->Html->link($title='Register', $url='/register') ?>
+        </div>
+        <?php echo $this->Form->end(); ?>
 
     </section><!-- content -->
 </div><!-- container -->
