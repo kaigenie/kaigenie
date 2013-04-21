@@ -19,7 +19,10 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 body {
     background: #DCDDDF url(../img/bg.png);
     color: #000;
-    font: 14px Arial;
+    font-family: proxima-nova,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333;
     margin: 0 auto;
     padding: 0;
     position: relative;
@@ -265,3 +268,4 @@ form:after {
     border-left: 1px solid #eaeaea;
     box-shadow: -1px 0 3px rgba(0,0,0,0.1);
 }
+

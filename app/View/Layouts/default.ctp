@@ -31,7 +31,8 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
     echo $this->Html->meta('icon');
     echo $this->Html->css('cake.changed');
     echo $this->Html->css('bootstrap');
-    echo $this->Html->css('bootstrap-responsive');
+//    echo $this->Html->css('bootstrap-responsive');
+    echo $this->Html->css('font-awesome');
     echo $this->Html->css('main');
     echo $this->fetch('meta');
     echo $this->fetch('css');
@@ -51,95 +52,95 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
                 padding-right: 5px;
             }
         }
+        .navbar-inner .container{
+            width: 940px;
+        }
     </style>
 </head>
 <body>
-<div id="container">
-    <div id="header">
 
-    </div>
-    <div id="content">
-
-
-    </div>
-    <div id="footer">
-
-    </div>
-</div>
 
 <div class="navbar navbar-inverse">
     <div class="navbar-inner">
-        <div class="container-fluid">
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="brand" href="#">Project name</a>
-            <div class="nav-collapse collapse">
+        <div class="container">
+            <div class="container-fluid">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="brand" href="#"><i class='icon-trophy'></i>Kaigenie</a>
+                <div class="nav-collapse collapse">
 
-                <?php if($this->Access->loggedIn()){ ?>
+                    <?php if($this->Access->loggedIn()){ ?>
 
-                <p class="navbar-text pull-right">
-                    Logged in as <a href="#" class="navbar-link">
-                    <?php echo $this->Access->getUsername() ?>
+                        <p class="navbar-text pull-right">
+                            Logged in as <a href="#" class="navbar-link">
+                                <?php echo $this->Access->getUsername() ?>
 
-                    </a>
-                </p>
+                            </a>
+                        </p>
 
-                <?php } ?>
-                <ul class="nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
+                    <?php } ?>
+                    <ul class="nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 
-        <div class="container-fluid">
+        <div class="container">
             <div class="row-fluid">
-                <div class="span2"></div>
-
-
-                    <div class="span2">
+                    <div class="span3">
                         <div class="well sidebar-nav">
                             <ul class="nav nav-list">
-                                <li class="nav-header">Admin Setup</li>
-                                <li class="active"><a href="#">Link</a></li>
-                                <li><a href="#">Link</a></li>
-                                <li><a href="#">Link</a></li>
-                                <li><a href="#">Link</a></li>
-                                <li class="nav-header">Sidebar</li>
-                                <li><a href="#">Link</a></li>
-                                <li><a href="#">Link</a></li>
+                                <li class="nav-header">Account Setup</li>
+                                <li>
 
+                                    <?php echo $this->Html->link(
+                                        $this->Html->icon('icon-home icon-large',__('Create Account')),
+                                        array(
+                                            'controller' => 'accounts',
+                                            'action' => 'add'
+                                        ),
+                                        array('escape' => false)
+                                    ) ?>
+                                </li>
+                                <li>
+                                    <?php echo $this->Html->link(
+                                        $this->Html->icon('icon-edit icon-large',__('Edit')),
+                                        array(
+                                            'controller' => 'accounts',
+                                            'action' => 'edit'
+                                        ),
+                                        array('escape' => false)
+                                    ) ?>
+                                </li>
+                                <li class="nav-header">User Setting</li>
+                                <li>
+                                    <?php echo $this->Html->link(
+                                        $this->Html->icon('icon-key icon-large',__('Change Password')),
+                                        array(
+                                            'controller' => 'users',
+                                            'action' => 'chg_psw'
+                                        ),
+                                        array('escape' => false)
+                                    ) ?>
+                                </li>
                             </ul>
-                        </div><!--/.well -->
-                    </div><!--/span-->
-
-
-
-
-
-                <div class="span6 main">
+                        </div>
+                    </div>
+                <div class="span9 main">
                     <?php echo $this->Session->flash(); ?>
-
                     <?php echo $this->fetch('content'); ?>
-
-                </div><!--/span-->
-                <div class="span2"></div>
-            </div><!--/row-->
-
-            <hr>
-
-            <footer>
-                <p>&copy; Company 2013</p>
-            </footer>
-
-        </div><!--/.fluid-container-->
+                </div>
+            </div>
+        </div>
 
 
 
