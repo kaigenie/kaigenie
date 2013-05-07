@@ -14,6 +14,20 @@ class User extends AppModel{
   public $hasMany = array('AccountUser');
   public $actsAs = array('Acl' => array('type' => 'requester'));
 
+  /**
+   * @return mixed
+   */
+  public function getAllAccountAdmin(){
+
+    $accountAdmins = $this->AccountUser->find('all', array(
+      'fields' => array('User.ID', 'User.username', 'User.email', 'Account.name', 'Account.ID', 'AccountUser.expired_date'),
+      'conditions'  => array('User.group_id' => Group::USER_GROUP_ACCOUNT_ADMIN),
+      'order'       => array('Account.name', 'User.username DESC')
+    ));
+
+    return $accountAdmins;
+  }
+
 
   /**
    * Hash the password before saving user in db.

@@ -75,11 +75,13 @@ class UsersController extends AppController{
    */
   public function list_admin(){
 
-    $admins = $this->User->find('all', $param = array(
-      'conditions'  => array('User.group_id' => Group::USER_GROUP_ACCOUNT_ADMIN),
-      'fields'      => array('User.username', 'User.email', 'User.first_name', 'User.last_name'),
-      'order'       => array('User.username', 'User.email DESC')
-    ));
+//    $admins = $this->User->find('all', $param = array(
+//      'conditions'  => array('User.group_id' => Group::USER_GROUP_ACCOUNT_ADMIN),
+//      'fields'      => array('User.username', 'User.email', 'User.first_name', 'User.last_name'),
+//      'order'       => array('User.username', 'User.email DESC')
+//    ));
+
+    $admins = $this->User->getAllAccountAdmin();
 
     $this->set('admins', $admins);
     $this->render('admin_list');

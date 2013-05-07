@@ -16,7 +16,6 @@
               <?php echo $this->Html->link($account['Account']['name'], array('action' => 'view', $account['Account']['ID'])); ?>
           </td>
           <td>
-<!--            --><?php //echo $this->Html->link(__('Edit'), array('action' => 'edit', $account['Account']['ID'])); ?>
             <div class="btn-group">
               <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                 Action
@@ -68,13 +67,25 @@
 
 <?php
 
+  if($this->Paginator->hasPage()){
+    echo '<div class="pagination pagination-right"><ul>';
+    if($this->Paginator->hasPrev()){
+      echo $this->Paginator->prev('<<', array('tag' => 'li'), null, array('class' => 'disabled'));
+    }
 
-echo $this->Paginator->numbers(array(
-  'before' => '<div class="pagination pagination-right"><ul>',
-  'separator' => '',
-  'currentClass' => 'active',
-  'currentTag' => 'a',
-  'tag' => 'li',
-  'after' => '</ul></div>'
-));
+    echo $this->Paginator->numbers(array(
+      'before' => '',
+      'separator' => '',
+      'currentClass' => 'active',
+      'currentTag' => 'a',
+      'tag' => 'li',
+      'after' => ''
+    ));
+
+    if($this->Paginator->hasNext()){
+      echo $this->Paginator->next('>>', array('tag' => 'li'), null, array('class' => 'disabled'));
+    }
+
+    echo '</ul></div>';
+  }
 ?>

@@ -113,11 +113,9 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
               array('escape' => false)
             ) ?>
           </li>
-
-          <li class="nav-header">User Setting</li>
           <li>
             <?php echo $this->Html->link(
-              $this->Html->icon('icon-user icon-large',__('Account Admin')),
+              $this->Html->icon('icon-user icon-large',__('Administrator')),
               array(
                 'controller' => 'users',
                 'action' => 'list_admin'
@@ -125,6 +123,9 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
               array('escape' => false)
             ) ?>
           </li>
+
+          <li class="nav-header">User Setting</li>
+
           <li>
             <?php echo $this->Html->link(
               $this->Html->icon('icon-key icon-large',__('Change Password')),
