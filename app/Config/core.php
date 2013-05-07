@@ -352,3 +352,19 @@ Cache::config('_cake_model_', array(
 	'serialize' => ($engine === 'File'),
 	'duration' => $duration
 ));
+
+
+Configure::write('App.Uploads', array(
+  'fileType'            => array('jpg', 'jpeg', 'gif', 'png'),
+  'location'            => 'C:/Users/I076004/Uploads',
+  'sizeLimit'           => 8 * 1024 * 1024, // 8M allowed
+  'thumbWidth'          => 150,
+  'thumbHeight'         => 150
+));
+
+Configure::write('Account.Type', array(
+  '0' => 'Basic',
+  '1' => 'Premium'
+));
+
+Configure::write('User.DefaultPassword', 'password');
