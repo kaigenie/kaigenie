@@ -37,7 +37,7 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 
     // Add DebugKit Toolbar, remove it as need
-//    public $components = array('DebugKit.Toolbar');
+  // public $components = array('DebugKit.Toolbar');
 
   public $components = array(
     'Acl',
@@ -53,10 +53,12 @@ class AppController extends Controller {
         )
       )
     ),
-    'Session', 'Paginator'
+    'Session', 'Paginator',
+    'DebugKit.Toolbar'
   );
     public $helpers = array(
       'Html'    => array('className' => 'UI'),
+      'Time'    => array('className' => 'MyTime'),
       'Js'      => array('Jquery'),
       "Access"  => array(
         "className" => 'Access'

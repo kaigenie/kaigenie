@@ -20,7 +20,7 @@ class User extends AppModel{
   public function getAllAccountAdmin(){
 
     $accountAdmins = $this->AccountUser->find('all', array(
-      'fields' => array('User.ID', 'User.username', 'User.email', 'Account.name', 'Account.ID', 'AccountUser.expired_date'),
+      'fields' => array('User.ID', 'User.username', 'User.email', 'Account.name', 'Account.ID', 'AccountUser.ID', 'AccountUser.expired_date'),
       'conditions'  => array('User.group_id' => Group::USER_GROUP_ACCOUNT_ADMIN),
       'order'       => array('Account.name', 'User.username DESC')
     ));

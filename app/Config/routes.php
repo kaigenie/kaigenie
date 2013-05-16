@@ -30,11 +30,24 @@
 /**
  * ...and connect the rest of 'Pages' controller's urls.
  */
-	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+  Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 
-    Router::connect("/login", array('controller'=>'users', 'action' => 'login'));
-    Router::connect("/logout", array('controller'=>'users', 'action' => 'logout'));
-    Router::connect("/register", array('controller'=>'users', 'action' => 'register'));
+  Router::connect("/login", array('controller'=>'users', 'action' => 'login'));
+  Router::connect("/logout", array('controller'=>'users', 'action' => 'logout'));
+  Router::connect("/register", array('controller'=>'users', 'action' => 'register'));
+
+/**
+ *  For Beautiful URL's sake, I'd like /accounts/1099/menu instead of /accounts/menu/1099
+ */
+  Router::connect("/:controller/:accid/:action", array(), array(
+    'pass' => array('accid'),
+    'accid'=>'[0-9]+'
+  ));
+
+  Router::connect("/:controller/:type/:id", array("controller"=>"upload", "action"=>"upload"), array(
+    "pass" => array("type", "id"),
+     "id" => '[0-9]+'
+  ));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on

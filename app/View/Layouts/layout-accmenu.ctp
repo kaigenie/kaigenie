@@ -31,6 +31,7 @@ $cakeDescription = __d('cake_dev', 'KaiGenie');
     echo $this->Html->meta('icon');
     echo $this->Html->css('cake.changed');
     echo $this->Html->css('bootstrap');
+    echo $this->Html->css('datepicker');
 //    echo $this->Html->css('bootstrap-responsive');
     echo $this->Html->css('font-awesome');
     echo $this->Html->css('main');
@@ -40,21 +41,8 @@ $cakeDescription = __d('cake_dev', 'KaiGenie');
     echo $this->Html->script('jquery-1.9.1');
     echo $this->Html->script('bootstrap');
     echo $this->Html->script('jquery.uploadifive');
+    echo $this->Html->script('bootstrap-datepicker');
     ?>
-    <style type="text/css">
-      .sidebar-nav {
-          padding: 9px 0;
-      }
-      @media (max-width: 980px) {
-        /* Enable use of floated navbar text */
-        .navbar-text.pull-right {
-            float: none;
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-      }
-
-    </style>
 </head>
 <body>
 <div class="navbar navbar-inverse">
@@ -68,13 +56,13 @@ $cakeDescription = __d('cake_dev', 'KaiGenie');
         </button>
         <a class="brand" href="#"><i class='icon-trophy'></i>Kaigenie</a>
         <div class="nav-collapse collapse">
-          <?php if($this->Access->loggedIn()): ?>
+          <?php if($this->Access->loggedIn()){ ?>
             <p class="navbar-text pull-right">
                 Logged in as <a href="#" class="navbar-link">
-                    <?php echo $this->Access->getUsername(); ?>
+                    <?php echo $this->Access->getUsername() ?>
                 </a>
             </p>
-         <?php endif; ?>
+        <?php } ?>
         <ul class="nav">
           <li class="active"><a href="#">Home</a></li>
           <li><a href="#about">About</a></li>
@@ -87,12 +75,7 @@ $cakeDescription = __d('cake_dev', 'KaiGenie');
 </div>
 <div class="container-fluid">
   <div class="row-fluid">
-    <?php if($this->Access->loggedIn()): ?>
-      <div class="span3">
-      <?php echo $this->element("admin_left_nav_panel"); ?>
-      </div>
-    <?php endif; ?>
-    <div class="<?php echo ($this->Access->loggedIn() ? "span9" : "span12")?> main">
+    <div class="span11 main">
       <?php echo $this->Session->flash(); ?>
       <?php echo $this->fetch('content'); ?>
     </div>

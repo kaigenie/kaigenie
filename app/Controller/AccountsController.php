@@ -119,23 +119,19 @@ class AccountsController extends AppController
    */
   public function _getLatLngFromGoogleMap($address)
   {
-    $request = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='. urlencode($address) .'&sensor=false');
-    $json = json_decode($request, true);
+    $request = @file_get_content('http://maps.googleapis.com/maps/api/geocode/json?address='. urlencode($address) .'&sensor=false');
+    if($request){
+      $json = json_decode($request, true);
 
-    $latLng = $json['results'][0]['geometry']['location'];
-    return $latLng;
-  }
-
-  public function add_step2()
-  {
-    if(!$this->Session->check($this::ACC_SESS_STEP1)){
-      $this->Session->setFlash('You have to input generic information.');
-      $this->redirect(array('action' => 'add'));
-
+      $latLng = $json['results'][0]['geometry']['location'];
+      return $latLng;
+    }else{
+      return array(
+        'lat' => 0.0,
+        'lng' => 0.0
+      );
     }
 
-    $this->Session->setFlash('Test Flash Message.', 'flash_alert');
-    $this->set('step', 'step2');
   }
 
   public function index()
@@ -143,7 +139,7 @@ class AccountsController extends AppController
     // Do not fetch unnecessary data
     $this->Paginator->settings = array(
       'recursive' => -1,
-      'fields' => array('Account.ID', 'Account.name'),
+      'fields' => array('Account.ID', 'Account.name', 'Account.level', 'Account.level_name'),
       'limit' => 5,
       'order' => array(
         'Account.name' => 'asc'
@@ -247,5 +243,14 @@ class AccountsController extends AppController
       }
     }
 
+  }
+
+  /**
+   * @param $accid
+   */
+  public function menu($accid){
+
+    $this->set('account', $this->Account->findAccountWithMenus($accid));
+    $this->render('/Menus/index', 'layout-accmenu');
   }
 }

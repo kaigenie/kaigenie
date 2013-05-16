@@ -38,4 +38,20 @@ class AccountUser extends AppModel{
     return $accountAdmins;
   }
 
+  /**
+   * Update Expire date of Account Administrator
+   *
+   * @param $id AccountUser which record need to be updated
+   * @param $days Date account admin will not able to control the account
+   * @return bool true success
+   */
+  public function setExpireDate($id, $days){
+
+    $expireDate = Date('Y-m-d', strtotime("+" . $days . "days"));
+
+    $this->read(null, $id);
+    $this->set('expired_date', $expireDate);
+    return $this->save();
+  }
+
 }

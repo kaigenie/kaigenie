@@ -15,7 +15,7 @@ class AppInitShell extends AppShell{
 
     self::_initGroup();
     self::_initSiteAdmin();
-    self::_buildAcl();
+//    self::_buildAcl();
 
   }
 

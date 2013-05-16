@@ -1,5 +1,8 @@
 <?php
 /**
+ * @property User User
+ * @property AccountUser AccountUser
+ *
  * In general, Kaigenie support three types of users.
  * 1. Site Administrator
  * 2. External Administrator
@@ -75,16 +78,32 @@ class UsersController extends AppController{
    */
   public function list_admin(){
 
-//    $admins = $this->User->find('all', $param = array(
-//      'conditions'  => array('User.group_id' => Group::USER_GROUP_ACCOUNT_ADMIN),
-//      'fields'      => array('User.username', 'User.email', 'User.first_name', 'User.last_name'),
-//      'order'       => array('User.username', 'User.email DESC')
-//    ));
-
     $admins = $this->User->getAllAccountAdmin();
-
     $this->set('admins', $admins);
     $this->render('admin_list');
+  }
+
+
+  public function delete_admin($id){
+    if(!$this->AccountUser->exists($id)){
+      throw new NotFoundException(__("The relationship is not found"));
+    }
+
+    if($this->AccountUser->delete($id)){
+      $this->redirect(array("action" => 'list_admin'));
+    }
+  }
+
+  public function expire_admin($id, $days){
+    if(!$this->AccountUser->exists($id)){
+      throw new NotFoundException(__("The Administrator can not been found"));
+    }
+
+    if($this->request->is('post')){
+      if($this->AccountUser->setExpireDate($id, $days)){
+        $this->redirect(array("action" => 'list_admin'));
+      }
+    }
   }
 
   /**

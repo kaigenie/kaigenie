@@ -32,11 +32,14 @@ class Account extends AppModel{
 
   public static $ACCOUNT_LEVEL = array('1' => 'Basic', '2' => 'Premium');
 
+  public $actsAs = array('Containable');
+
   public $hasMany = array(
     'AccountFeature',
     'AccountCategory',
     'AccountUser',
-    'Image'
+    'AccountImage',
+    'Menu'
   );
 
 
@@ -72,6 +75,20 @@ class Account extends AppModel{
       ));
     }
     return parent::saveAll($data, $options);
+  }
+
+  /**
+   * @param $accountId
+   * @return array
+   */
+  public function findAccountWithMenus($accountId){
+
+    $account = $this->find('first', array(
+      'fields' => array('Account.ID', 'Account.name', 'Account.type'),
+      'conditions' => array('Account.ID = ' => $accountId),
+      'contain' => array('Menu')
+    ));
+    return $account;
   }
 
 
