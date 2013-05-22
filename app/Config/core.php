@@ -361,8 +361,12 @@ Configure::write('App.Uploads', array(
   'thumbWidth'          => 150,
   'thumbHeight'         => 150,
 
+  "static_server"       => "http://localhost",
+  "static_uri"           => "/uploads/",
+
   "accept_file_types"   => '/\.(gif|jpe?g|png)$/i',
   "upload_dir"           => 'C:/Users/I076004/Uploads/',
+  "upload_url"          => '/uploads/',
   "param_name"           => "files",
   "max_file_size"        => 8 * 1024 * 1024,
   'image_versions' => array(
@@ -390,9 +394,15 @@ Configure::write('App.Uploads', array(
 
 ));
 
+Configure::write('Account.Level', array(
+  '1' => 'Basic',
+  '2' => 'Premium'
+));
+
 Configure::write('Account.Type', array(
-  '0' => 'Basic',
-  '1' => 'Premium'
+  '1' => 'Restaurant',
+  '2' => 'Coffee Bar',
+  '3' => 'Pub'
 ));
 
 Configure::write('User.DefaultPassword', 'password');

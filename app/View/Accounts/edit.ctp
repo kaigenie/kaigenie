@@ -1,216 +1,244 @@
-<h3>General Info</h3>
-<?php echo $this->Form->create('Account', array(
+<div class="setup-box account-edit">
+
+  <div class="hd">
+    <h5><?php echo __("General Info") ?></h5>
+  </div>
+
+  <div class="con">
+
+    <?php echo $this->Form->create('Account', array(
         'inputDefaults' => array('div'=>false, 'label'=>false),
         'url'=>array('controller' => 'accounts', 'action' => 'edit'),
         'class' => 'form-horizontal'
-    )
-);
-?>
-
-<div class="control-group">
-    <label class="control-label" for="account-name">Account Name</label>
-    <div class="controls">
-        <?php echo $this->Form->input('name', array('id'=>'account-name')) ?>
-        <?php echo $this->Form->hidden('id') ?>
-    </div>
-</div>
-
-<div class="control-group">
-  <label class="control-label" for="account-type">Type</label>
-  <div class="controls">
-    <?php echo $this->Form->input('type', array(
-      'id'=>'account-type',
-      'options'=> Configure::read('Account.Type')
-    )) ?>
-  </div>
-</div>
-
-
-<div class="control-group">
-  <label class="control-label" for="account-admin">Administrators</label>
-  <div class="controls">
-    <div id="account-user-list">
-      <?php
-      $accountUsers = $this->data['AccountUser'];
-      if(empty($accountUsers)){
-        echo "Doesn't have an account yet. ";
-      } else {
-        echo $this->UI->userlist($accountUsers, array("class" => 'inline'));
-      }
-      ?>
-    </div>
-    <?php
-      echo $this->UI->link('Add?', "#add-admin-to-account", array("role" => 'button' , 'data-toggle'=>'modal', 'class' => 'btn btn-primary btn-small'));
+      )
+    );
     ?>
 
-  </div>
-</div>
-
-<h3><?php echo __('Location Info') ?></h3>
-
-<div class="control-group">
-    <label class="control-label" for="account-suburb">City</label>
-    <div class="controls">
-        <?php echo $this->Form->input('city', array(
-            'id'=>'account-city',
-            'options' => array(
-                'Auckland'          => 'Auckland',
-                'Hamilton'          => 'Hamilton',
-                'Tauranga'          => 'Tauranga',
-                'Napier'            => 'Napier',
-                'Palmerston North'  => 'Palmerston North',
-                'Porirua'           => 'Porirua',
-                'Upper Hutt'        => 'Upper Hutt',
-                'Lower Hutt'        => 'Lower Hutt',
-                'Wellington'        => 'Wellington',
-                'Nelson'            => 'Nelson',
-                'Christchurch'      => 'Christchurch',
-                'Dunedin'           => 'Dunedin',
-                'Invercargill'      => 'Invercargill',
-            )
-        )) ?>
-    </div>
-</div>
-
-<div class="control-group">
-    <label class="control-label" for="account-suburb">Street</label>
-    <div class="controls">
-        <?php echo $this->Form->input('street', array('id'=>'account-street')) ?>
-    </div>
-</div>
-
-<div class="control-group">
-    <label class="control-label" for="account-suburb">Telephone</label>
-    <div class="controls">
-        <?php echo $this->Form->input('telephone', array('id'=>'account-telephone')) ?>
-    </div>
-</div>
-
-
-<div class="control-group">
-  <label class="control-label" for="account-telephone">Suburb</label>
-  <div class="controls">
-    <?php echo $this->Form->input('suburb', array('id'=>'account-suburb')) ?>
-  </div>
-</div>
-
-<div class="control-group">
-  <label class="control-label" for="account-zipcode">Zip Code</label>
-  <div class="controls">
-    <?php echo $this->Form->input('zipcode', array(
-      'id'=>'account-zipcode',
-      'class' => 'input-small'
-    )) ?>
-  </div>
-</div>
-
-<?php
-  if(!empty($features)){
-?>
     <div class="control-group">
-      <label class="control-label" for="account-features">Features</label>
+      <label class="control-label" for="account-name">Account Name</label>
       <div class="controls">
-        <?php
-        echo $this->Form->select(
-          'AccountFeature.feature_id',
-          $features,
-          array(
-            'multiple' => 'checkbox',
-            'value' => array_map(
-              function($item){
-                return $item['feature_id'];
-              },
-              $this->data['AccountFeature']
-            )
-          )
-        );
-        ?>
-
+        <?php echo $this->Form->input('name', array('id'=>'account-name')) ?>
+        <?php echo $this->Form->hidden('id') ?>
       </div>
     </div>
-<?php
-  }
-?>
+
+    <div class="control-group">
+      <label class="control-label" for="account-type">Type</label>
+      <div class="controls">
+        <?php echo $this->Form->input('type', array(
+          'id'=>'account-type',
+          'options'=> Configure::read('Account.Type')
+        )) ?>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="account-type">Level</label>
+      <div class="controls">
+        <?php echo $this->Form->input('level', array(
+          'id'=>'account-type',
+          'options'=> Configure::read('Account.Level')
+        )) ?>
+      </div>
+    </div>
 
 
-<h3><?php echo __('Other Info') ?></h3>
+    <div class="control-group">
+      <label class="control-label" for="account-admin">Administrators</label>
+      <div class="controls">
+        <div id="account-user-list">
+          <?php
+          $accountUsers = $this->data['AccountUser'];
+          if(empty($accountUsers)){
+            echo "Doesn't have an account yet. ";
+          } else {
+            echo $this->UI->userlist($accountUsers, array("class" => 'inline'));
+          }
+          ?>
+        </div>
+        <?php
+        echo $this->UI->link('Add?', "#add-admin-to-account", array("role" => 'button' , 'data-toggle'=>'modal', 'class' => 'btn btn-primary btn-small'));
+        ?>
+      </div>
+    </div>
 
-<div class="control-group">
-  <label class="control-label" for="account-seat_num">Total Seat Number</label>
-  <div class="controls">
-    <?php echo $this->Form->input('seat_num', array(
-      'id'=>'account-seat_num',
-      'type' => 'number',
-      'class' => 'input-small'
-    )) ?>
-  </div>
-</div>
+    <div class="hd">
+      <h5><?php echo __('Location Info') ?></h5>
+    </div>
 
-<div class="control-group">
-  <label class="control-label" for="account-avg_spending">Average Spending</label>
-  <div class="controls">
-    <?php echo $this->Form->input('avg_spending', array(
-      'id'=>'account-avg_spending',
-      'type' => 'number',
-      'class' => 'input-small'
-    )) ?>
-  </div>
-</div>
+    <div class="con">
+      <div class="control-group">
+        <label class="control-label" for="account-suburb">City</label>
+        <div class="controls">
+          <?php echo $this->Form->input('city', array(
+            'id'=>'account-city',
+            'options' => array(
+              'Auckland'          => 'Auckland',
+              'Hamilton'          => 'Hamilton',
+              'Tauranga'          => 'Tauranga',
+              'Napier'            => 'Napier',
+              'Palmerston North'  => 'Palmerston North',
+              'Porirua'           => 'Porirua',
+              'Upper Hutt'        => 'Upper Hutt',
+              'Lower Hutt'        => 'Lower Hutt',
+              'Wellington'        => 'Wellington',
+              'Nelson'            => 'Nelson',
+              'Christchurch'      => 'Christchurch',
+              'Dunedin'           => 'Dunedin',
+              'Invercargill'      => 'Invercargill',
+            )
+          )) ?>
+        </div>
+      </div>
 
-<div class="control-group">
-  <label class="control-label" for="account-openFrom">Business Hours</label>
-  <div class="controls">
-    <?php echo $this->Form->time('openFrom', array(
-      'id'=>'account-openFrom',
-      'type'=>'time',
-      'class' => 'input-small'
-    )) ?>
-    <?php echo $this->Form->time('openTo', array(
-      'id'=>'account-openTo',
-      'type'=>'time',
-      'class' => 'input-small'
-    )) ?>
-  </div>
-</div>
+      <div class="control-group">
+        <label class="control-label" for="account-suburb">Street</label>
+        <div class="controls">
+          <?php echo $this->Form->input('street', array('id'=>'account-street')) ?>
+        </div>
+      </div>
 
-<?php
-if(!empty($categories)){
-?>
-  <div class="control-group">
-    <label class="control-label" for="account-features">Categories</label>
-    <div class="controls">
-      <?php
-      echo $this->Form->select(
-        'AccountCategory.category_id',$categories,
-        array(
-          'multiple' => 'checkbox',
-          'value'    => array_map(
-            function($item){
-              return $item['category_id'];
-            },
-            $this->data['AccountCategory']
-          )
-        )
-      );
-      ?>
+      <div class="control-group">
+        <label class="control-label" for="account-suburb">Telephone</label>
+        <div class="controls">
+          <?php echo $this->Form->input('telephone', array('id'=>'account-telephone')) ?>
+        </div>
+      </div>
+
+
+      <div class="control-group">
+        <label class="control-label" for="account-telephone">Suburb</label>
+        <div class="controls">
+          <?php echo $this->Form->input('suburb', array('id'=>'account-suburb')) ?>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="account-zipcode">Zip Code</label>
+        <div class="controls">
+          <?php echo $this->Form->input('zipcode', array(
+            'id'=>'account-zipcode',
+            'class' => 'input-small'
+          )) ?>
+        </div>
+      </div>
+
+      <?php if(!empty($features)): ?>
+        <div class="control-group">
+          <label class="control-label" for="account-features">Features</label>
+          <div class="controls">
+            <?php
+            echo $this->Form->select(
+              'AccountFeature.feature_id',
+              $features,
+              array(
+                'multiple' => 'checkbox',
+                'value' => array_map(
+                  function($item){
+                    return $item['feature_id'];
+                  },
+                  $this->data['AccountFeature']
+                )
+              )
+            );
+            ?>
+
+          </div>
+        </div>
+      <?php endif; ?>
+
+    </div>
+
+
+    <div class="hd">
+      <h5><?php echo __('Other Info') ?></h5>
+    </div>
+
+    <div class="con">
+      <div class="control-group">
+        <label class="control-label" for="account-seat_num">Total Seat Number</label>
+        <div class="controls">
+          <?php echo $this->Form->input('seat_num', array(
+            'id'=>'account-seat_num',
+            'type' => 'number',
+            'class' => 'input-small'
+          )) ?>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="account-avg_spending">Average Spending</label>
+        <div class="controls">
+          <?php echo $this->Form->input('avg_spending', array(
+            'id'=>'account-avg_spending',
+            'type' => 'number',
+            'class' => 'input-small'
+          )) ?>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="account-openFrom">Business Hours</label>
+        <div class="controls">
+          <?php echo $this->Form->time('openFrom', array(
+            'id'=>'account-openFrom',
+            'type'=>'time',
+            'class' => 'input-small'
+          )) ?>
+          <?php echo $this->Form->time('openTo', array(
+            'id'=>'account-openTo',
+            'type'=>'time',
+            'class' => 'input-small'
+          )) ?>
+        </div>
+      </div>
+
+      <?php if(!empty($categories)): ?>
+        <div class="control-group">
+          <label class="control-label" for="account-features">Categories</label>
+          <div class="controls">
+            <?php
+            echo $this->Form->select(
+              'AccountCategory.category_id',$categories,
+              array(
+                'multiple' => 'checkbox',
+                'value'    => array_map(
+                  function($item){
+                    return $item['category_id'];
+                  },
+                  $this->data['AccountCategory']
+                )
+              )
+            );
+            ?>
+          </div>
+        </div>
+
+      <?php endif; ?>
+
     </div>
   </div>
 
-<?php } ?>
-<?php
-$options = array(
-  'label' => __('Update'),
-  'class' => 'btn btn-primary pull-right',
-  'div' => false
-);
-echo $this->Form->end($options);
-?>
+
+
+  <?php
+  $options = array(
+    'label' => __('Update'),
+    'class' => 'btn btn-primary pull-right',
+    'div' => false
+  );
+  echo $this->Form->end($options);
+  ?>
+
+
+</div>
+
 
 
 <div id="add-admin-to-account" class="modal hide fade">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Assign an Administrator</h3>
+    <h5>Assign an Administrator</h5>
   </div>
   <div class="modal-body">
     <?php echo $this->Form->create('User', array(

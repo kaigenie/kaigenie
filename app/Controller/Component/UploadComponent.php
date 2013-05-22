@@ -172,6 +172,10 @@ class UploadComponent extends Component{
       . $version_path . $file_name;
   }
 
+  protected function get_relative_path($file_name = null){
+    return '';
+  }
+
   protected function get_user_path()
   {
     if ($this->options['user_dirs']) {
@@ -213,6 +217,10 @@ class UploadComponent extends Component{
     if ($this->options['access_control_allow_credentials']) {
       $file->delete_with_credentials = true;
     }
+  }
+
+  protected function set_file_thumb_properties($file){
+
   }
 
   // Fix for overflowing signed 32 bit integers,
@@ -613,6 +621,7 @@ class UploadComponent extends Component{
   {
     $file = new stdClass();
     $file->name = $this->get_file_name($name, $type, $index, $content_range);
+    $file->original_name = $name;
     $file->size = $this->fix_integer_overflow(intval($size));
     $file->type = $type;
     $file->ext = $this->get_file_ext($name);
@@ -625,6 +634,7 @@ class UploadComponent extends Component{
       $file_path = $this->get_upload_path($file->name);
       // modified by Ethan
       $file->dir = $file_path;
+      $file->relative_path = $this->get_relative_path($file->name);
       $append_file = $content_range && is_file($file_path) &&
         $file->size > $this->get_file_size($file_path);
       if ($uploaded_file && is_uploaded_file($uploaded_file)) {
@@ -661,6 +671,8 @@ class UploadComponent extends Component{
         }
       }
       $this->set_file_delete_properties($file);
+
+      $this->set_file_thumb_properties($file);
     }
     return $file;
   }
@@ -895,4 +907,26 @@ class UploadComponent extends Component{
     }
     return $this->generate_response(array('success' => $success), $print_response);
   }
+
+  protected function get_static_server(){
+    $server = $this->options["static_server"] . $this->options['static_uri'];
+
+    if(empty($server)){
+      // static server and php server may be on the same server
+
+      $https = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+
+      $server =
+        ($https ? 'https://' : 'http://') .
+        (!empty($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] . '@' : '') .
+        (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : ($_SERVER['SERVER_NAME'] .
+        ($https && $_SERVER['SERVER_PORT'] === 443 ||
+        $_SERVER['SERVER_PORT'] === 80 ? '' : ':' . $_SERVER['SERVER_PORT']))) .
+        $this->options['static_uri'];
+
+    }
+
+    return $server;
+  }
+
 }

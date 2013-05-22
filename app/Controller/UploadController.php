@@ -37,17 +37,19 @@ class UploadController extends AppController{
     $this->autoRender = false;
 
     if($this->request->is("post")){
-      $result = $this->ImageUpload->upload(array("account_id" => $account_id));
+      $images = $this->ImageUpload->upload(array("account_id" => $account_id));
 
-      $images = $result['files'];
       $this->AccountImage->saveImages($images,$account_id);
 
-      $response = $result['response'];
-      echo $response;
-    }else{
+      $this->ImageUpload->json_response($images);
 
+    }else{
+      $this->set("account", $this->Account->findById($account_id, true, array(
+        'fields' => array('Account.ID', 'Account.name')
+      )));
       $this->render("/Upload/acc_img");
     }
 
   }
+
 }

@@ -49,30 +49,55 @@ class ImageUploadComponent extends UploadComponent{
       foreach($files as $key=>$file){
         $this->Image->create();
         $image = array(
-          'name' => $file->name,
+          'name' => $file->original_name,
           'directory' => $file->dir,
           'extension' => $file->ext,
           'size'      => $file->size,
           'unique_name' => $file->name,
-          'relative_path' => "",
+          'relative_path' => $file->relative_path,
           'mime_type'   => $file->type
         );
         $savedImage = $this->Image->save($image);
         $images[] = $savedImage;
       }
 
-      $response = $this->generate_response(
-        array($this->options['param_name'] => $files),
-        true
-      );
-      return array("files"=>$images, "response"=>$response);
+
+      return $images;
     }
 
-    return array();
+    return null;
   }
 
-  protected function generate_response($content, $print_response = false){
-    return json_encode($content);
+  public function json_response($images){
+
+    $model = "Image";
+
+    if(empty($images)){
+      return "";
+    }
+
+    $files = array();
+
+    foreach ($images as $image) {
+      $file = new stdClass();
+
+      $file->name = $image[$model]["unique_name"];
+      $file->original_name = $image[$model]["name"];
+
+      foreach ($this->options['image_versions'] as $version => $options) {
+        if (!empty($version)) {
+          if (is_file($this->get_upload_path($file->name, $version))) {
+            $file->{$version . '_url'} = rtrim($this->get_static_server(), '/') .
+              $image[$model]["relative_path"] . $version . '/' . $file->name;
+          }
+        }
+      }
+      $file->type = $image[$model]["mime_type"];
+      $file->size = $image[$model]["size"];
+      $files[] = $file;
+    }
+
+    return $this->generate_response(array($this->options['param_name'] => $files), true);
   }
 
   public function initialize(Controller $controller){
@@ -96,6 +121,12 @@ class ImageUploadComponent extends UploadComponent{
     $version_path = empty($version) ? '' : $version . '/';
     return $this->options['upload_dir'] . $this->get_account_path()
             . $this->get_user_path() . $version_path . $file_name;
+  }
+
+  protected function get_relative_path($file_name = null){
+
+    $file_name = $file_name ? $file_name : '';
+    return $this->get_account_path()[0] == '/' ? $this->get_account_path() : '/' . $this->get_account_path();
   }
 
   protected function get_account_path(){

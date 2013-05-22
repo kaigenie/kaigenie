@@ -27,7 +27,7 @@ class AccountsController extends AppController
   {
 //    $this->Acl->allow();
     if ($this->request->is('post') && !empty($this->request->data)) {
-      $latLng = $this->_prepareGenData();
+      $this->_prepareGenData();
       $this->_prepareFeatures();
       $this->_prepareCategories();
       $saved_account = $this->Account->saveAll($this->request->data);
@@ -57,14 +57,21 @@ class AccountsController extends AppController
   private function _prepareGenData()
   {
     $this->Account->create();
-    $address = htmlspecialchars($this->request->data['Account']['street']);
     $this->request->data['Account']['status'] = AccountStatus::REGISTERED;
+
+    $ACC_TYPES = Configure::read("Account.Type");
+    $ACC_LEVEL = Configure::read("Account.Level");
+
+    $this->request->data['Account']['level_name'] = $ACC_LEVEL[$this->request->data['Account']['level']];
+    $this->request->data['Account']['type_name'] = $ACC_TYPES[$this->request->data['Account']['type']];
+
     $this->request->data['Account']['name'] = htmlspecialchars($this->request->data['Account']['name']);
+
+    $address = htmlspecialchars($this->request->data['Account']['street']);
     $this->request->data['Account']['street'] = $address;
-    $latLng = $this->_getLatLngFromGoogleMap($address);
-    $this->request->data['Account']['geolat'] = $latLng['lat'];
-    $this->request->data['Account']['geolng'] = $latLng['lng'];
-    return $latLng;
+//    $latLng = $this->_getLatLngFromGoogleMap($address);
+//    $this->request->data['Account']['geolat'] = $latLng['lat'];
+//    $this->request->data['Account']['geolng'] = $latLng['lng'];
   }
 
   /**
@@ -105,21 +112,11 @@ class AccountsController extends AppController
   }
 
   /**
-   *
-   * @param $latLng Latitude
-   * @return string Longitude
-   */
-  public function _construct_step2_url($latLng)
-  {
-    return '/accounts/add_step2?lat=' . $latLng['lat'] . '&lng=' . $latLng['lng'];
-  }
-
-  /**
    * @return mixed
    */
   public function _getLatLngFromGoogleMap($address)
   {
-    $request = @file_get_content('http://maps.googleapis.com/maps/api/geocode/json?address='. urlencode($address) .'&sensor=false');
+    $request = file_get_content('http://maps.googleapis.com/maps/api/geocode/json?address='. urlencode($address) .'&sensor=false');
     if($request){
       $json = json_decode($request, true);
 
@@ -139,7 +136,8 @@ class AccountsController extends AppController
     // Do not fetch unnecessary data
     $this->Paginator->settings = array(
       'recursive' => -1,
-      'fields' => array('Account.ID', 'Account.name', 'Account.level', 'Account.level_name'),
+      'fields' => array('Account.ID', 'Account.name', 'Account.level', 'Account.level_name',
+                        'Account.type', 'Account.type_name'),
       'limit' => 5,
       'order' => array(
         'Account.name' => 'asc'
@@ -166,7 +164,9 @@ class AccountsController extends AppController
       }
     }
 
-    $account = $this->Account->findById($id);
+    $account = $this->Account->findById($id, $self = false, $query = array(
+      'contain' => array('AccountFeature', 'AccountCategory')
+    ));
     $account['AccountUser'] = $this->AccountUser->getAccountAdmin($id);
     $this->_initSelectList();
 
@@ -252,5 +252,13 @@ class AccountsController extends AppController
 
     $this->set('account', $this->Account->findAccountWithMenus($accid));
     $this->render('/Menus/index', 'layout-accmenu');
+  }
+
+
+  public function photos($accid){
+
+    $account = $this->Account->findAccountPhotos($accid);
+
+    $this->set("account", $account);
   }
 }

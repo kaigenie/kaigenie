@@ -17,7 +17,10 @@ class FeaturesController extends AppController{
    */
   public function index(){
 
-    $features = $this->Feature->find('all');
+    $this->Feature->recursive = -1;
+//    $features = $this->Feature->find('all');
+    $features = $this->Feature->getFeaturesWithAccountCount();
+    debug($features);
     $this->set("features", $features);
 
   }
@@ -64,6 +67,16 @@ class FeaturesController extends AppController{
   }
 
   public function delete($id){
+
+    $this->autoRender = false;
+
+    if(!isset($id)){
+      $id = $_POST["id"];
+    }
+
+    $result = $this->Feature->delete($id);
+
+    echo json_encode(array("result"=>$result));
 
   }
 

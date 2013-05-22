@@ -30,4 +30,28 @@ class Feature extends AppModel{
     }
     return $keyValues;
   }
+
+  public function getFeaturesWithAccountCount(){
+    $result = $this->find('all', $query=array(
+      'fields' => array("Feature.ID", 'Feature.name', 'count(account_id) as cntAcc'),
+      'joins' => array(
+        array(
+          'table'=>'accounts_features',
+          'alias' => 'af',
+          'type' => 'left',
+          'conditions' => array(
+            'af.feature_id = Feature.ID'
+          )
+        )
+      ),
+      'conditions' => array(
+        'Feature.enabled'=>true,
+        'Feature.is_deleted' => false
+      ),
+      'group'  => array("Feature.ID", 'Feature.name'),
+      'order'  => array("Feature.name ASC")
+    ));
+
+    return $result;
+  }
 }

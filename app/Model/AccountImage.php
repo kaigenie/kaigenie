@@ -11,6 +11,8 @@ class AccountImage extends AppModel{
 
   public $useTable = "accounts_images";
 
+  public $belongsTo = array("Account", "Image");
+
   public function saveImages($images = array(), $accountId = null){
     if(!empty($images)){
       $saved = array();

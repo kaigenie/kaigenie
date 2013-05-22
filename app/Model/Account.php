@@ -77,6 +77,18 @@ class Account extends AppModel{
     return parent::saveAll($data, $options);
   }
 
+  public function findById($accountId = null, $self = true, $query = array()){
+
+    if($self){
+      $this->recursive = -1;
+    }
+    $query = array_merge(array(
+      'conditions' => array('Account.ID = ' => $accountId),
+    ),$query);
+    return $this->find('first',$query);
+
+  }
+
   /**
    * @param $accountId
    * @return array
@@ -89,6 +101,17 @@ class Account extends AppModel{
       'contain' => array('Menu')
     ));
     return $account;
+  }
+
+  public function findAccountPhotos($accountId){
+    $query = array(
+      'contain' => 'AccountImage'
+    );
+
+    $account = $this->findById($accountId, false, $query);
+    debug($account);
+    return $account;
+
   }
 
 

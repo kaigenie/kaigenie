@@ -37,14 +37,14 @@
   Router::connect("/register", array('controller'=>'users', 'action' => 'register'));
 
 /**
- *  For Beautiful URL's sake, I'd like /accounts/1099/menu instead of /accounts/menu/1099
+ *  For URL's sake, I'd like /accounts/1099/menu instead of /accounts/menu/1099
  */
   Router::connect("/:controller/:accid/:action", array(), array(
     'pass' => array('accid'),
     'accid'=>'[0-9]+'
   ));
 
-  Router::connect("/:controller/:type/:id", array("controller"=>"upload", "action"=>"upload"), array(
+  Router::connect("/upload/:type/:id", array("controller"=>"upload", "action"=>"upload"), array(
     "pass" => array("type", "id"),
      "id" => '[0-9]+'
   ));

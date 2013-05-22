@@ -1,17 +1,40 @@
-<h2><?php echo __('Add Category') ?></h2>
+<div class="setup-box category-new">
+  <div class="hd"><h5><?php echo __('Add Category') ?></h5></div>
+  <div class="con span7">
+    <?php
+      echo $this->Form->create('Category', array(
+      'inputDefaults' => array('div'=>false, 'label'=>false),
+      'class' => 'form-horizontal'
+    ));
+    ?>
+    <div class="control-group">
+      <label class="control-label" for="account-street">Name</label>
+      <div class="controls">
+        <?php echo $this->Form->input('name', array('required'=>'true')); ?>
 
-<?php
-echo $this->Form->create('Category');
-echo $this->Form->input('name', array(
-  'label'=> __('Category Name'),
-));
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="account-street">Description</label>
+      <div class="controls">
+        <?php echo $this->Form->input('description', array(
+          'type' => 'textarea',
+          'rows' => 3,
+          'cols' => 5
+        )); ?>
+      </div>
+    </div>
 
-echo $this->Form->input('description', array(
-  'label'=> __('Description'),
-  'type' => 'textarea',
-  'rows' => 3,
-  'cols' => 5
-));
+    <?php
+    $options = array(
+      'label' => __('Add'),
+      'class' => 'btn btn-primary pull-right',
+      'div' => false
+    );
+    echo $this->Form->end($options);
+    ?>
+  </div>
+</div>
 
-echo $this->Form->end('Create');
-?>
+
+

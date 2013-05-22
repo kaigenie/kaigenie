@@ -135,6 +135,21 @@ class UsersController extends AppController{
     }
   }
 
+  public function remove_admin($id){
+
+    $this->autoRender = false;
+
+    if(!isset($id)){
+      $id = $_POST['id'];
+    }
+
+    if($this->request->is('post')){
+      $result = $this->AccountUser->delete($id);
+      echo json_encode(array("result"=>$result));
+
+    }
+  }
+
   public function beforeRender() {
       if($this->Session->check('Auth.User')) {
 

@@ -10,6 +10,7 @@
       <thead>
       <tr>
         <th><?php echo __('Name') ?></th>
+        <th><?php echo __('Level') ?></th>
         <th><?php echo __('Type') ?></th>
         <th><?php echo __('Action') ?></th>
       </tr>
@@ -24,6 +25,9 @@
             <?php echo $account['Account']['level_name'] ?>
           </td>
           <td>
+            <?php echo $account['Account']['type_name'] ?>
+          </td>
+          <td>
             <div class="btn-group">
               <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                 Action
@@ -36,7 +40,7 @@
                     array(
                       'controller' => 'accounts',
                       'action' => 'edit',
-                      $account['Account']['ID']
+                      'accid' => $account['Account']['ID']
                     ),
                     array('escape' => false)
                   ) ?>
