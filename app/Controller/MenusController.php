@@ -9,10 +9,16 @@
 App::uses('Thumbnail','Utility');
 class MenusController extends AppController{
 
-  public $uses = array('Account', 'User', 'MenuItem','Menu', 'Image');
+  public $components = array("ImageUpload");
 
+  public $uses = array('Account', 'User', 'MenuItem','Menu', 'ItemImage');
+
+  /**
+   * Make sure Add menu/item under on specific account.
+   *
+   * @throws NotFoundException
+   */
   public function beforeFilter(){
-
     /*
      * Since Menu can not exist alone, so we need to check if the passed account id exits
      */
@@ -24,7 +30,6 @@ class MenusController extends AppController{
     if(!isset($accid) && !$this->Account->exists($accid)){
       throw new NotFoundException("You have to specify an existing account");
     }
-
     $this->layout = 'layout-accmenu';
   }
 
@@ -39,6 +44,9 @@ class MenusController extends AppController{
     $this->set("account", $account);
   }
 
+  /**
+   * Add a Menu.
+   */
   public function add(){
 
     if($this->request->is('post')){
@@ -54,66 +62,26 @@ class MenusController extends AppController{
 
   public function add_item(){
 
+    $accountId = $this->request->data["MenuItem"]['account_id'];
+
     if($this->request->is('post')){
       $this->MenuItem->create();
-      $this->MenuItem->save($this->request->data);
-      if(!empty($_FILES)){
-        $accountId = $this->request->data["MenuItem"]['account_id'];
-        $uploadConfig= Configure::read('App.Uploads');
+      $images = $this->ImageUpload->upload(array("account_id" => $accountId));
 
-        $uploadDir = $uploadConfig['location'];
+      $savedMenu = $this->MenuItem->save($this->request->data);
 
-
-        $fileTypes = $uploadConfig['fileType'];
-
-        $uploadDir = rtrim($uploadDir, DS) . DS;
-
-        $relativePath = DS . $accountId . DS . 'images' .DS;
-
-        $uploadDir = rtrim($uploadDir, DS) . $relativePath;
-
-        if(!is_dir($uploadDir)){
-          if(!mkdir($uploadDir, 0777,true)){
-            throw new NotFoundException(__("The folder is not accessible"));
-          }
-        }
-
-        $tempFile   = $_FILES['item-image']['tmp_name'];
-        $realFileName   = $_FILES['item-image']['name'];
-        $targetFile = $uploadDir . $realFileName;
-        // Validate the filetype
-        $fileParts = pathinfo($realFileName);
+      $this->ItemImage->saveImages($images, $savedMenu);
 
 
-        $uniqueFileName = uniqid() . '.' . strtolower($fileParts['extension']);
-        $uniqueFile = rtrim($uploadDir, DS) . DS . $uniqueFileName;
-        $image = array(
-          'name' => $realFileName,
-          'directory' => dirname($targetFile),
-          'extension' => strtolower($fileParts['extension']),
-          'size'      => filesize($tempFile),
-          'unique_name' => $uniqueFileName,
-          'relative_path' => $relativePath
-        );
-        $user = $this->Auth->user();
-        $image['user_id'] = $user['ID'];
-        $image['account_id'] = $accountId;
-        if (in_array(strtolower($fileParts['extension']), $fileTypes)) {
-          // Save the file
-          move_uploaded_file($tempFile, $uniqueFile);
-          // generate thumbnail for display
-          Thumbnail::generateThumbnail($uniqueFile);
-          // save image into database
-          $this->Image->save($image);
-          echo 1;
-        }
-        $this->redirect(array(
-          'controller' => 'accounts',
-          'action'=> 'menu',
-          'accid' => $accountId
-        ));
-      }
     }
+
+//    $this->redirect(array(
+//      'controller' => 'accounts',
+//      'action'=> 'menu',
+//      'accid' => $accountId
+//    ));
+
+    $this->redirect($this->referer());
 
 
   }

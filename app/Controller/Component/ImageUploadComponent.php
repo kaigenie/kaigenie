@@ -60,8 +60,6 @@ class ImageUploadComponent extends UploadComponent{
         $savedImage = $this->Image->save($image);
         $images[] = $savedImage;
       }
-
-
       return $images;
     }
 

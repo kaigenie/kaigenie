@@ -9,24 +9,57 @@
 
 class Account extends AppModel{
 
-//    public $hasAndBelongsToMany = array(
-//      'Feature' => array(
-//        'className'             => 'Feature',
-//        'joinTable'             => 'accounts_features',
-//        'foreignKey'            => 'account_id',
-//        'associationForeignKey' => 'feature_id',
-//        'unique'                 => true,
-//        'conditions'             => '',
-//        'fields'                 => '',
-//        'order'                  => '',
-//        'limit'                  => '',
-//        'offset'                 => '',
-//        'finderQuery'            => '',
-//        'deleteQuery'            => '',
-//        'insertQuery'            => ''
-//
-//      )
-//    );
+  //http://book.cakephp.org/2.0/en/models/associations-linking-models-together.html#hasandbelongstomany-habtm
+  public $hasAndBelongsToMany = array(
+      'Feature' => array(
+        'className'             => 'Feature',
+        'joinTable'             => 'accounts_features',
+        'foreignKey'            => 'account_id',
+        'associationForeignKey' => 'feature_id',
+        'with'                  => 'AccountFeature', // If true (default value) cake will first delete existing relationship records in the foreign keys table before inserting new ones. Existing associations need to be passed again when updating
+        'unique'                 => false,
+        'conditions'             => '',
+        'fields'                 => '',
+        'order'                  => '',
+        'limit'                  => '',
+        'offset'                 => '',
+        'finderQuery'            => '',
+        'deleteQuery'            => '',
+        'insertQuery'            => ''
+      ),
+        'Category' => array(
+          'className'             => 'Category',
+          'joinTable'             => 'accounts_category',
+          'foreignKey'            => 'account_id',
+          'associationForeignKey' => 'category_id',
+          'with'                  => 'AccountCategory',
+          'unique'                 => false,
+          'conditions'             => '',
+          'fields'                 => '',
+          'order'                  => '',
+          'limit'                  => '',
+          'offset'                 => '',
+          'finderQuery'            => '',
+          'deleteQuery'            => '',
+          'insertQuery'            => ''
+        ),
+      'Image' => array(
+        'className'             => 'Image',
+        'joinTable'             => 'accounts_images',
+        'foreignKey'            => 'account_id',
+        'associationForeignKey' => 'image_id',
+        'with'                  => 'AccountImage',
+        'unique'                 => false,
+        'conditions'             => '',
+        'fields'                 => '',
+        'order'                  => '',
+        'limit'                  => '',
+        'offset'                 => '',
+        'finderQuery'            => '',
+        'deleteQuery'            => '',
+        'insertQuery'            => ''
+      )
+    );
 
   public static $ACCOUNT_TYPE  = array('1' => 'Restaurant', '2' => 'Coffee Bar' );
 
@@ -95,24 +128,136 @@ class Account extends AppModel{
    */
   public function findAccountWithMenus($accountId){
 
+    $this->recursive = -1;
+
     $account = $this->find('first', array(
-      'fields' => array('Account.ID', 'Account.name', 'Account.type'),
+      'fields' => array(
+        'Account.ID', 'Account.name', 'Account.type'
+      ),
       'conditions' => array('Account.ID = ' => $accountId),
-      'contain' => array('Menu')
+      'contain' => array(
+        'Menu' => array(
+          'fields' => array(
+            'Menu.ID', 'Menu.name'
+          ),
+          'MenuItem' => array(
+            'fields'=>array(
+              'MenuItem.ID','MenuItem.name','MenuItem.description',
+              'MenuItem.price','MenuItem.symbol',
+            ),
+            'ItemPortrait' => array(
+              'fields' => array(
+                'ItemPortrait.ID',
+                'ItemPortrait.name',
+                'ItemPortrait.size',
+                'ItemPortrait.unique_name',
+                'ItemPortrait.relative_path',
+              )
+            )
+          )
+        )
+      )
     ));
+
+
     return $account;
   }
 
   public function findAccountPhotos($accountId){
+
     $query = array(
-      'contain' => 'AccountImage'
+      'contain' => 'AccountImage',
+
+      'fields' => array(
+        'Account.ID', 'Account.name','img.ID','img.name','img.size', 'img.relative_path'
+      ),
+      'conditions' => array(
+        'Account.ID' => $accountId
+      ),
+      'joins' => array(
+        array(
+          'table' => 'accounts_images',
+          'alias' => 'ai',
+          'type' => 'left',
+          'conditions' => array(
+            'ai.account_id = Account.ID'
+          )
+        ),
+        array(
+          'table' => 'images',
+          'alias' => 'img',
+          'type' => 'left',
+          'conditions'=> array(
+            'img.id = ai.image_id'
+          )
+        )
+      )
     );
 
-    $account = $this->findById($accountId, false, $query);
-    debug($account);
+    $account = $this->find("all" ,$query);
+
     return $account;
 
   }
 
+  /**
+   * This function server as /account/detail/1234 page which display most of the account information. For instance,
+   * uploaded photos, Category and Feature info.
+   *
+   * @param null $accId Account ID passed by URL
+   * @return array Return Account Detail information
+   */
+  public function getDetail($accId = null){
+
+    // strictly set recursive otherwise cakephp will retrive redundant records.
+    $this->recursive = -1;
+    $account = $this->find('first',array(
+      'contain'     => array(
+        'Feature', 'Category'
+      ),
+      'conditions'  => array(
+        'Account.ID' => $accId
+      )
+    ));
+
+//    $photos = $account['Image'];
+//    $photosWithUrl = $this->_buildImageUrl($photos);
+//    unset($account['Image']);
+//    $account['Image'] = $photosWithUrl;
+
+    return $account;
+  }
+
+  private function _buildImageUrl($photos = array()){
+
+    $uploadConfig= Configure::read('App.Uploads');
+    $staticServer = $uploadConfig['static_server'];
+    $staticUri = $uploadConfig['static_uri'];
+    $versions = $uploadConfig['image_versions'];
+
+    $newImage = array();
+    $updatedPhotos = array();
+
+    if(!empty($photos)){
+      foreach($photos as $image){
+        list($imageID,$fileName,$fileSize) = array($image['ID'],$image['name'],$image['size']);
+        list($uniqueName, $relativePath) = array($image['unique_name'], $image['relative_path']);
+
+        foreach ($versions as $version => $options) {
+          if (!empty($version)) {
+            $newImage[$version . '_url'] = $staticServer . $staticUri . $relativePath . $version . '/' . $uniqueName;
+          }
+        }
+        $newImage = array_merge($newImage,array(
+          'ID'   => $imageID,
+          'name' => $fileName,
+          'size' => $fileSize
+        ));
+
+        $updatedPhotos[] = $newImage;
+      }
+    }
+    return $updatedPhotos;
+  }
 
 }

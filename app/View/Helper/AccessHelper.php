@@ -45,6 +45,10 @@ class AccessHelper extends AppHelper{
         return $this->user['username'];
     }
 
+    public function getEmail(){
+      return $this->user['email'];
+    }
+
     public function getName(){
         return $this->user['first_name'] .' '. $this->user['last_name'];
     }

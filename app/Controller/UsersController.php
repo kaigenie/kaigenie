@@ -135,6 +135,11 @@ class UsersController extends AppController{
     }
   }
 
+  /**
+   * Remove administrator from an account.
+   *
+   * @param $id
+   */
   public function remove_admin($id){
 
     $this->autoRender = false;
@@ -146,6 +151,50 @@ class UsersController extends AppController{
     if($this->request->is('post')){
       $result = $this->AccountUser->delete($id);
       echo json_encode(array("result"=>$result));
+
+    }
+  }
+
+  public function setup($param = null){
+
+    if($param == 'password'){
+      // Render change password page
+
+      if($this->request->is('post')){
+        $oldPwd = $_POST['oldPassword'];
+        $newPwd = $_POST['newPassword'];
+        $rptPwd = $_POST['repeatPassword'];
+
+        $ready = true;
+
+        $loggedInUser = $this->Auth->user();
+
+        $this->User->recursive = -1;
+        $user = $this->User->findByUsername($loggedInUser['username']);
+
+        $oldHashedPwd = AuthComponent::password($oldPwd);
+
+        if($oldHashedPwd != $user['User']['password']){
+          $this->Session->setFlash("Your current password is incorrect.", 'flash_alert');
+          $ready = false;
+        }
+
+        if($newPwd != $rptPwd){
+          $this->Session->setFlash("Two passwords are inconsistant.", 'flash_alert');
+          $ready = false;
+        }
+
+        if($ready){
+          $updateUser = $this->User->create();
+          $this->User->id = $loggedInUser['ID'];
+          $this->User->saveField('password', $newPwd);
+          $this->Session->setFlash("Save Successfully", 'flash_alert');
+        }
+
+
+        $this->data = $_POST;
+      }
+      $this->render('/users/chgpsw');
 
     }
   }

@@ -9,7 +9,9 @@
 
 class Menu extends AppModel{
 
-  public $hasMany = array('MenuItem');
+  public $hasMany = array(
+    'MenuItem'
+  );
   public $belongsTo = array("Account");
 
 }

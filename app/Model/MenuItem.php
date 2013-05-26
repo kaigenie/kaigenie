@@ -11,5 +11,17 @@ class MenuItem extends AppModel{
 
   public $belongsTo = array('Menu');
 
+  public $hasAndBelongsToMany = array(
+    'ItemPortrait' => array(
+      'className'             => 'Image',
+      'joinTable'             => 'menuitem_images',
+      'foreignKey'            => 'item_id',
+      'associationForeignKey' => 'image_id',
+      'unique'                 => false,
+      'with'                  => 'ItemImage'
+
+    )
+  );
+
   public $useTable = 'menuitem';
 }

@@ -16,7 +16,7 @@ class AccountsController extends AppController
 {
   const ACC_SESS_STEP1 = 'step1-account';
 
-  public $uses = array('Account', 'Feature', 'AccountFeature', 'Category', 'Image','AccountUser');
+  public $uses = array('Account', 'Feature', 'AccountFeature', 'Category', 'AccountImage','AccountUser');
 
   public function beforeFilter(){
     parent::beforeFilter();
@@ -174,91 +174,56 @@ class AccountsController extends AppController
 
   }
 
-  public function upload($accountId){
-
-    $uploadConfig= Configure::read('App.Uploads');
-
-    $uploadDir = $uploadConfig['location'];
-
-    $fileTypes = $uploadConfig['fileType'];
-
-    $uploadDir = rtrim($uploadDir, DS) . DS;
-
-    $relativePath = DS . $accountId . DS . 'images' .DS;
-
-    $uploadDir = rtrim($uploadDir, DS) . $relativePath;
-
-
-
-    if($this->request->is('post')){
-
-      if(!is_dir($uploadDir)){
-        if(!mkdir($uploadDir, $recursive = true)){
-          throw new NotFoundException(__("The folder is not accessible"));
-        }
-      }
-
-      $account = $this->Account->findById($accountId);
-
-      $user = $this->Auth->user();
-
-      $verifyToken = md5(Configure::read('Security.salt') . $_POST['timestamp']);
-
-      if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
-        $tempFile   = $_FILES['Filedata']['tmp_name'];
-        $realFileName   = $_FILES['Filedata']['name'];
-        $targetFile = $uploadDir . $realFileName;
-        // Validate the filetype
-        $fileParts = pathinfo($realFileName);
-
-        $mimeType = $_POST['mimeType'];
-
-        $uniqueFileName = uniqid() . '.' . strtolower($fileParts['extension']);
-        $uniqueFile = rtrim($uploadDir, DS) . DS . $uniqueFileName;
-        $image = array(
-          'name' => $realFileName,
-          'directory' => dirname($targetFile),
-          'extension' => strtolower($fileParts['extension']),
-          'size'      => filesize($tempFile),
-          'unique_name' => $uniqueFileName,
-          'relative_path' => $relativePath,
-          'mime_type'   => $mimeType
-        );
-
-        $image['user_id'] = $user['ID'];
-        $image['account_id'] = $accountId;
-
-        if (in_array(strtolower($fileParts['extension']), $fileTypes)) {
-          // Save the file
-          move_uploaded_file($tempFile, $uniqueFile);
-          // generate thumbnail for display
-          Thumbnail::generateThumbnail($uniqueFile);
-          // save image into database
-          $this->Image->save($image);
-          echo 1;
-        } else {
-          // The file type wasn't allowed
-          echo 'Invalid file type.';
-        }
-      }
-    }
-
-  }
 
   /**
    * @param $accid
    */
   public function menu($accid){
 
-    $this->set('account', $this->Account->findAccountWithMenus($accid));
+    $account = $this->Account->findAccountWithMenus($accid);
+    $this->set('account', $account);
+
     $this->render('/Menus/index', 'layout-accmenu');
   }
 
 
+  /**
+   *
+   * This will render and display all of the account uploaded related images. it severs /accounts/1234/photos
+   *
+   * @param $accid Account ID
+   */
   public function photos($accid){
 
-    $account = $this->Account->findAccountPhotos($accid);
+    $account = $this->Account->findById($accid, true, array(
+      'fields' => array('Account.ID', 'Account.name')
+    ));
+
+    $photos = $this->AccountImage->findAccountImages($accid);
 
     $this->set("account", $account);
+    $this->set("photos", $photos);
+  }
+
+  /**
+   * Get Account Details information
+   *
+   * @param $accid Account ID
+   */
+  public function detail($accid){
+    $account = $this->Account->getDetail($accid);
+    $this->set("account", $account);
+  }
+
+  public function test($accid){
+    $tmp = $this->Account->getDetail($accid);
+
+    $this->Feature->recursive = 1;
+    $tmp2 = $this->Feature->findById(1, array(
+    ));
+
+    debug($tmp2);
+
+    $this->autoRender = false;
   }
 }

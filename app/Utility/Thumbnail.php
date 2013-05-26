@@ -83,4 +83,5 @@ class Thumbnail{
     imagedestroy($dst_img);
     imagedestroy($src_img);
   }
+
 }

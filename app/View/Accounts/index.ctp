@@ -63,7 +63,7 @@
                     $this->Html->icon('icon-eye-open icon-large',__('View Detail')),
                     array(
                       'controller' => 'accounts',
-                      'action' => 'view',
+                      'action' => 'detail',
                       $account['Account']['ID']
                     ),
                     array('escape' => false)

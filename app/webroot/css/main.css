@@ -449,7 +449,7 @@ ul.menu-item-list{
   overflow: auto;
   margin: 10px;
   padding: 5px;
-
+  clear: both;
 
 }
 ul.menu-item-list li{
@@ -457,13 +457,20 @@ ul.menu-item-list li{
   border-top: 1px dotted green;
   margin-bottom: 10px;
   padding:10px;
-  width: 880px;
+  width: 800px;
+
 }
 
 ul.menu-item-list div.menu-item-image{
   margin-right: 10px;
 }
 
+.menu-item{
+
+}
+.menu-item-content{
+  width:680px;
+}
 span.menu-item-name, span.menu-item-price{
   font-size: 16px;
   color:#c83025;
@@ -536,4 +543,8 @@ ul.account-upload-list li {
   border:8px solid #fff;
   background-color: #ccc;
   position:relative;
+}
+
+.change-password h5 span em {
+  margin: 0 8px;
 }

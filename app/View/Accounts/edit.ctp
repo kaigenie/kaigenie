@@ -180,12 +180,12 @@
       <div class="control-group">
         <label class="control-label" for="account-openFrom">Business Hours</label>
         <div class="controls">
-          <?php echo $this->Form->time('openFrom', array(
+          <?php echo $this->Form->time('biz_hour_from', array(
             'id'=>'account-openFrom',
             'type'=>'time',
             'class' => 'input-small'
           )) ?>
-          <?php echo $this->Form->time('openTo', array(
+          <?php echo $this->Form->time('biz_hour_to', array(
             'id'=>'account-openTo',
             'type'=>'time',
             'class' => 'input-small'

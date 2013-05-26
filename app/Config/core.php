@@ -383,6 +383,11 @@ Configure::write('App.Uploads', array(
         'max_height' => 600,
         'jpeg_quality' => 80
     ),
+    '200x150' => array(
+      'max_width' => 200,
+      'max_height' => 150,
+      'jpeg_quality' => 100
+    ),
     'thumbnail' => array(
       // Uncomment the following to force the max
       // dimensions and e.g. create square thumbnails:
