@@ -1,5 +1,6 @@
 <?php
   $acc = $account["Account"];
+  $photos = $account['Image'];
 ?>
 <div class="setup-box account-photos">
   <div class="hd">
@@ -43,9 +44,9 @@
       <?php else: ?>
       <ol class="account-photos-list">
         <?php foreach($photos as $photo):?>
-        <li id="photo-<?php echo $photo['Image']['ID'] ?>" class="photo">
-          <a href="<?php echo $photo['Image']['medium_url'] ?>" title="<?php echo $photo['Image']['name'] ?>">
-            <img src="<?php echo $photo['Image']['200x150_url'] ?>">
+        <li id="photo-<?php echo $photo['ID'] ?>" class="photo">
+          <a href="<?php echo $photo['medium_url'] ?>" title="<?php echo $photo['name'] ?>">
+            <img src="<?php echo $photo['200x150_url'] ?>">
           </a>
         </li>
 

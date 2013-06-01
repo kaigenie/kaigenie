@@ -16,7 +16,7 @@ class AccountsController extends AppController
 {
   const ACC_SESS_STEP1 = 'step1-account';
 
-  public $uses = array('Account', 'Feature', 'AccountFeature', 'Category', 'AccountImage','AccountUser');
+  public $uses = array('Account', 'Feature', 'AccountFeature', 'Category','AccountUser');
 
   public function beforeFilter(){
     parent::beforeFilter();
@@ -195,14 +195,9 @@ class AccountsController extends AppController
    */
   public function photos($accid){
 
-    $account = $this->Account->findById($accid, true, array(
-      'fields' => array('Account.ID', 'Account.name')
-    ));
-
-    $photos = $this->AccountImage->findAccountImages($accid);
+    $account = $this->Account->findPhotos($accid);
 
     $this->set("account", $account);
-    $this->set("photos", $photos);
   }
 
   /**

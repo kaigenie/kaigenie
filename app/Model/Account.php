@@ -200,6 +200,26 @@ class Account extends AppModel{
 
   }
 
+
+  public function findPhotos($accountId){
+
+    $query = array(
+      'contain' => 'Image',
+      'fields' => array(
+        'Account.ID', 'Account.name'
+      ),
+
+      'conditions' => array(
+        'Account.ID' => $accountId
+      ),
+    );
+
+    $account = $this->find("first" ,$query);
+
+    return $account;
+
+  }
+
   /**
    * This function server as /account/detail/1234 page which display most of the account information. For instance,
    * uploaded photos, Category and Feature info.
@@ -226,38 +246,6 @@ class Account extends AppModel{
 //    $account['Image'] = $photosWithUrl;
 
     return $account;
-  }
-
-  private function _buildImageUrl($photos = array()){
-
-    $uploadConfig= Configure::read('App.Uploads');
-    $staticServer = $uploadConfig['static_server'];
-    $staticUri = $uploadConfig['static_uri'];
-    $versions = $uploadConfig['image_versions'];
-
-    $newImage = array();
-    $updatedPhotos = array();
-
-    if(!empty($photos)){
-      foreach($photos as $image){
-        list($imageID,$fileName,$fileSize) = array($image['ID'],$image['name'],$image['size']);
-        list($uniqueName, $relativePath) = array($image['unique_name'], $image['relative_path']);
-
-        foreach ($versions as $version => $options) {
-          if (!empty($version)) {
-            $newImage[$version . '_url'] = $staticServer . $staticUri . $relativePath . $version . '/' . $uniqueName;
-          }
-        }
-        $newImage = array_merge($newImage,array(
-          'ID'   => $imageID,
-          'name' => $fileName,
-          'size' => $fileSize
-        ));
-
-        $updatedPhotos[] = $newImage;
-      }
-    }
-    return $updatedPhotos;
   }
 
 }

@@ -27,6 +27,9 @@ class Image extends AppModel{
    * @return array|mixed
    */
   public function afterFind($results, $primary = false){
+
+    parent::afterFind($results, $primary);
+
     $uploadConfig= Configure::read('App.Uploads');
     $staticServer = $uploadConfig['static_server'];
     $staticUri = $uploadConfig['static_uri'];
@@ -34,9 +37,16 @@ class Image extends AppModel{
 
     $newImage = array();
     $updatedPhotos = array();
-    debug($results);
+
     if(!empty($results)){
-      foreach($results as $image){
+
+      if(self::_isFilted($results)){
+//        return self::_getFilted($results);
+        return $results;
+      }
+
+
+      foreach($results as $key=>$image){
         list($imageID,$fileName,$fileSize) = array($image['ID'],$image['name'],$image['size']);
         list($uniqueName, $relativePath) = array($image['unique_name'], $image['relative_path']);
         foreach ($versions as $version => $options) {
@@ -48,13 +58,38 @@ class Image extends AppModel{
         $newImage = array_merge($newImage,array(
           'ID'   => $imageID,
           'name' => $fileName,
-          'size' => $fileSize
+          'size' => $fileSize,
+          'fill' => true // afterFind will be called twice, this flag is used to make sure it doesn't broken
         ));
 
         $updatedPhotos[] = $newImage;
       }
     }
     return $updatedPhotos;
+  }
+
+  private function _isFilted($results){
+    $firstElement = reset($results);
+
+    if(isset($firstElement[$this->alias])){
+      return reset($firstElement[$this->alias])['fill'];
+    }
+
+    if(array_key_exists($this->alias,array_keys($firstElement))){
+      return true;
+    }
+
+    return false;
+  }
+
+  private function _getFilted($results){
+    $firstElement = reset($results);
+
+    if(isset($firstElement)){
+      return reset($firstElement);
+    }
+
+    return $firstElement[$this->alias];
   }
 
 }

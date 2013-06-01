@@ -5,8 +5,8 @@
   .item-portrait{
     position: absolute;
     overflow: hidden;
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     right: 10px;
     top:10px;
     border:2px dotted #ccc;
@@ -16,8 +16,15 @@
     text-align: center;
     line-height: 150px;
     padding: 5px;
-
   }
+
+  .item-portrait canvas, .item-portrait img{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    margin-right: 5px;
+  }
+
   .item-portrait input {
     position: absolute;
     top: 0;
@@ -53,7 +60,7 @@
       <?php
       echo $this->Form->input('name', array(
         'type'        => 'text',
-        'placeholder' => __('Menu Name'),
+        'placeholder' => __('Item Name'),
         'class'       => 'span4'
       ));
       echo $this->Form->input('price', array(
@@ -132,54 +139,24 @@
       modalForm.modal('show');
     });
 
-    var cancelButton = $('<button/>')
-      .addClass('btn btn-warning cancel')
-      .prop('disabled', true)
-      .text('Cancel')
-      .on('click', function () {
-        var $this = $(this),
-          data = $this.data();
-        $this
-          .off('click')
-          .text('Abort')
-          .on('click', function () {
-            $this.remove();
-            data.abort();
-          });
-        data.submit().always(function () {
-          $this.remove();
-        });
-      });
+    $("#item-image").bind("change",function(e){
 
-//    $('#item-image').fileupload({
-//      autoUpload: false,
-//      acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-//      maxFileSize: 5000000, // 5 MB
-//      loadImageMaxFileSize: 15000000, // 15MB
-//      disableImageResize: false,
-//      previewMaxWidth: 130,
-//      previewMaxHeight: 130,
-//      previewCrop: true
-//    }).on('fileuploadadd', function (e, data) {
-//        data.context = $('<div/>').appendTo('#files');
-//        $.each(data.files, function (index, file) {
-//          var node = $('<p/>')
-//            .append($('<span/>').text(file.name));
-//
-//          node.appendTo(data.context);
-//        });
-//      }).on('fileuploadprocessalways', function (e, data) {
-//        var index = data.index,
-//          file = data.files[index],
-//          node = $(data.context.children()[index]);
-//        if (file.preview) {
-//          node
-//            .prepend(file.preview);
-//          node
-//            .append(cancelButton.clone(true).data(data));
-//        }
-//
-//      })
+      $(".item-portrait img").remove();
+      $(".item-portrait canvas").remove();
+
+
+      window.loadImage(
+        e.target.files[0],
+        function(img){
+          $(".item-portrait").append(img);
+        },
+        {
+//          canvas: true,
+          maxWidth: 150
+
+        }
+      )
+    })
 
   });
 </script>
