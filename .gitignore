@@ -1,9 +1,9 @@
 # User specific & automatically generated files #
 #################################################
-<<<<<<< HEAD
-=======
 
->>>>>>> b0d5a881b0221aff986e96e1cbdc5821f2975e16
+app/tmp/cache/persistent
+app/tmp/cache/models
+
 # OS generated files #
 ######################
 .DS_Store
