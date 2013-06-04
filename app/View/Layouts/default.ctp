@@ -17,7 +17,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-$cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
+$cakeDescription = __d('cake_dev', 'KaiGenie');
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,118 +31,73 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
     echo $this->Html->meta('icon');
     echo $this->Html->css('cake.changed');
     echo $this->Html->css('bootstrap');
-    echo $this->Html->css('bootstrap-responsive');
+//    echo $this->Html->css('bootstrap-responsive');
+    echo $this->Html->css('font-awesome');
     echo $this->Html->css('main');
     echo $this->fetch('meta');
     echo $this->fetch('css');
     echo $this->fetch('script');
+    echo $this->Html->script('jquery-1.9.1');
+    echo $this->Html->script('bootstrap');
+    echo $this->Html->script('jquery.uploadifive');
     ?>
     <style type="text/css">
-
-        .sidebar-nav {
-            padding: 9px 0;
+      .sidebar-nav {
+          padding: 9px 0;
+      }
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+            float: none;
+            padding-left: 5px;
+            padding-right: 5px;
         }
+      }
 
-        @media (max-width: 980px) {
-            /* Enable use of floated navbar text */
-            .navbar-text.pull-right {
-                float: none;
-                padding-left: 5px;
-                padding-right: 5px;
-            }
-        }
     </style>
 </head>
 <body>
-<div id="container">
-    <div id="header">
-
-    </div>
-    <div id="content">
-
-
-    </div>
-    <div id="footer">
-
-    </div>
-</div>
-
 <div class="navbar navbar-inverse">
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="brand" href="#">Project name</a>
-            <div class="nav-collapse collapse">
-
-                <?php if($this->Access->loggedIn()){ ?>
-
-                <p class="navbar-text pull-right">
-                    Logged in as <a href="#" class="navbar-link">
-                    <?php echo $this->Access->getUsername() ?>
-
-                    </a>
-                </p>
-
-                <?php } ?>
-                <ul class="nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
-        </div>
+  <div class="navbar-inner">
+    <div class="container">
+      <div class="container-fluid">
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="brand" href="#"><i class='icon-trophy'></i>Kaigenie</a>
+        <div class="nav-collapse collapse">
+          <?php if($this->Access->loggedIn()): ?>
+            <p class="navbar-text pull-right">
+                Logged in as <a href="#" class="navbar-link">
+                    <?php echo $this->Access->getUsername(); ?>
+                </a>
+            </p>
+         <?php endif; ?>
+        <ul class="nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
     </div>
+    </div>
+  </div>
 </div>
-
-
-        <div class="container-fluid">
-            <div class="row-fluid">
-                <div class="span2"></div>
-
-
-                    <div class="span2">
-                        <div class="well sidebar-nav">
-                            <ul class="nav nav-list">
-                                <li class="nav-header">Admin Setup</li>
-                                <li class="active"><a href="#">Link</a></li>
-                                <li><a href="#">Link</a></li>
-                                <li><a href="#">Link</a></li>
-                                <li><a href="#">Link</a></li>
-                                <li class="nav-header">Sidebar</li>
-                                <li><a href="#">Link</a></li>
-                                <li><a href="#">Link</a></li>
-
-                            </ul>
-                        </div><!--/.well -->
-                    </div><!--/span-->
-
-
-
-
-
-                <div class="span6 main">
-                    <?php echo $this->Session->flash(); ?>
-
-                    <?php echo $this->fetch('content'); ?>
-
-                </div><!--/span-->
-                <div class="span2"></div>
-            </div><!--/row-->
-
-            <hr>
-
-            <footer>
-                <p>&copy; Company 2013</p>
-            </footer>
-
-        </div><!--/.fluid-container-->
-
-
-
+<div class="container-fluid">
+  <div class="row-fluid">
+    <?php if($this->Access->loggedIn()): ?>
+      <div class="span3">
+      <?php echo $this->element("admin_left_nav_panel"); ?>
+      </div>
+    <?php endif; ?>
+    <div class="<?php echo ($this->Access->loggedIn() ? "span9" : "span12")?> main">
+      <?php echo $this->Session->flash(); ?>
+      <?php echo $this->fetch('content'); ?>
+    </div>
+  </div>
+</div>
 
 <?php echo $this->element('sql_dump'); ?>
 </body>

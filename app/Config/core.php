@@ -33,7 +33,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug', 2);
+	Configure::write('debug',2);
 
 /**
  * Configure the Error handler used to handle errors for your application. By default
@@ -352,3 +352,62 @@ Cache::config('_cake_model_', array(
 	'serialize' => ($engine === 'File'),
 	'duration' => $duration
 ));
+
+
+Configure::write('App.Uploads', array(
+  'fileType'            => array('jpg', 'jpeg', 'gif', 'png'),
+  'location'            => 'C:/Users/I076004/Uploads/',
+  'sizeLimit'           => 8 * 1024 * 1024, // 8M allowed
+  'thumbWidth'          => 150,
+  'thumbHeight'         => 150,
+
+  "static_server"       => "http://localhost",
+  "static_uri"           => "/uploads/",
+
+  "accept_file_types"   => '/\.(gif|jpe?g|png)$/i',
+  "upload_dir"           => 'C:/Users/I076004/Uploads/',
+  "upload_url"          => '/uploads/',
+  "param_name"           => "files",
+  "max_file_size"        => 8 * 1024 * 1024,
+  'image_versions' => array(
+    // Uncomment the following version to restrict the size of
+    // uploaded images:
+    '' => array(
+        'max_width' => 1920,
+        'max_height' => 1200,
+        'jpeg_quality' => 95
+    ),
+    // Uncomment the following to create medium sized images:
+    'medium' => array(
+        'max_width' => 800,
+        'max_height' => 600,
+        'jpeg_quality' => 80
+    ),
+    '200x150' => array(
+      'max_width' => 200,
+      'max_height' => 150,
+      'jpeg_quality' => 100
+    ),
+    'thumbnail' => array(
+      // Uncomment the following to force the max
+      // dimensions and e.g. create square thumbnails:
+      //'crop' => true,
+      'max_width' => 80,
+      'max_height' => 80
+    )
+  )
+
+));
+
+Configure::write('Account.Level', array(
+  '1' => 'Basic',
+  '2' => 'Premium'
+));
+
+Configure::write('Account.Type', array(
+  '1' => 'Restaurant',
+  '2' => 'Coffee Bar',
+  '3' => 'Pub'
+));
+
+Configure::write('User.DefaultPassword', 'password');
