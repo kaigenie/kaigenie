@@ -49,14 +49,14 @@
                     <?php echo $this->Html->link(
                       $this->Html->icon('icon-trash icon-large',__('Delete')),
                       '#',
-                      array('escape' => false,'class'=>'remove-admin', 'data-admin-id'=>$admin['AccountUser']['ID'])
+                      array('escape' => false,'class'=>'remove-admin', 'data-admin-id'=>$admin['AccountUser']['id'])
                     ) ?>
                   </li>
                   <li>
                     <?php echo $this->UI->link(
                       $this->Html->icon('icon-time icon-large',__('Set Expire Date')),
                       "#expire-date-modal",
-                      array("escape"=>false, "role"=>"button", "data-toggle"=>"modal", "data-account-user" => $admin['AccountUser']['ID'])
+                      array("escape"=>false, "role"=>"button", "data-toggle"=>"modal", "data-account-user" => $admin['AccountUser']['id'])
                     ) ?>
                   </li>
               </div>

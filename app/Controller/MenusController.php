@@ -36,7 +36,7 @@ class MenusController extends AppController{
   /**
    * Index page of Menu, URI like /accounts/1000/menu will route to this method
    *
-   * @param $accid Account ID
+   * @param $accid Account id
    */
   public function index($accid = null){
 

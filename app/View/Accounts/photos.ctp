@@ -44,7 +44,7 @@
       <?php else: ?>
       <ol class="account-photos-list">
         <?php foreach($photos as $photo):?>
-        <li id="photo-<?php echo $photo['ID'] ?>" class="photo">
+        <li id="photo-<?php echo $photo['id'] ?>" class="photo">
           <a href="<?php echo $photo['medium_url'] ?>" title="<?php echo $photo['name'] ?>">
             <img src="<?php echo $photo['200x150_url'] ?>">
           </a>

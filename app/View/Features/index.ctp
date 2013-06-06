@@ -19,7 +19,7 @@
 
         <thead>
         <tr>
-          <th><?php echo __('ID') ?></th>
+          <th><?php echo __('id') ?></th>
           <th><?php echo __('Name') ?></th>
           <th><?php echo __('# of Account') ?></th>
           <th><?php echo __('Action') ?></th>
@@ -27,9 +27,9 @@
         </thead>
         <?php foreach ($features as $feature): ?>
           <tr>
-            <td><?php echo $feature['Feature']['ID']; ?></td>
+            <td><?php echo $feature['Feature']['id']; ?></td>
             <td>
-              <?php echo $this->Html->link($feature['Feature']['name'], array('action' => 'view', $feature['Feature']['ID'])); ?>
+              <?php echo $this->Html->link($feature['Feature']['name'], array('action' => 'view', $feature['Feature']['id'])); ?>
             </td>
             <td><?php echo $feature['0']['cntAcc']; ?></td>
             <td>
@@ -45,7 +45,7 @@
                       array(
                         'controller' => 'features',
                         'action' => 'edit',
-                        $feature['Feature']['ID']
+                        $feature['Feature']['id']
                       ),
                       array('escape' => false)
                     ) ?>
@@ -55,7 +55,7 @@
                       $this->Html->icon('icon-trash icon-large',__('Delete')),
                       '#',
                       array('escape' => false, "class"=>'delete-feature',
-                            'data-feature-id'=>$feature['Feature']['ID'],
+                            'data-feature-id'=>$feature['Feature']['id'],
                             'data-feature-name'=>$feature['Feature']['name'])
                     ) ?>
                   </li>

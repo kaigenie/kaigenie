@@ -16,12 +16,12 @@ class Category extends AppModel{
 
     $categories = $this->find('all', array(
       'conditions' => array('Category.enabled' => true),
-      'fields' => array('Category.ID', 'Category.name')
+      'fields' => array('Category.id', 'Category.name')
     ));
 
     $keyValues = array();
     foreach($categories as $category){
-      $key = $category['Category']['ID'];
+      $key = $category['Category']['id'];
       $value = $category['Category']['name'];
       $keyValues[$key] = $value;
     }

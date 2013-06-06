@@ -235,10 +235,10 @@ class EmailComponent extends Component {
 	public $htmlMessage = null;
 
 /**
- * Whether to generate a Message-ID header for the
- * e-mail. True to generate a Message-ID, False to let
+ * Whether to generate a Message-id header for the
+ * e-mail. True to generate a Message-id, False to let
  * it be handled by sendmail (or similar) or a string
- * to completely override the Message-ID.
+ * to completely override the Message-id.
  *
  * If you are sending Email from a shell, be sure to set this value. As you
  * could encounter delivery issues if you do not.

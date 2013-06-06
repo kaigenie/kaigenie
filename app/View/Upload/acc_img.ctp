@@ -5,7 +5,7 @@
   <div class="con">
     <p class="con-hints">Upload Photos into the account, only jpeg, jpg, png allowed.</p>
     <!-- The file upload form used as target for the file upload widget -->
-    <form id="fileupload" action='<?php echo Router::url(array("controller"=>"upload", "type"=>"account", "id"=>$account["Account"]["ID"])) ?>'
+    <form id="fileupload" action='<?php echo Router::url(array("controller"=>"upload", "type"=>"account", "id"=>$account["Account"]["id"])) ?>'
           method="POST" enctype="multipart/form-data">
       <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
       <div class="fileupload-buttonbar">
@@ -31,7 +31,7 @@
 <!--          <input type="checkbox" class="toggle">-->
 
           <a class="btn btn-success pull-right"
-             href="<?php echo Router::url(array("controller"=>"accounts", "action"=>"photos", "accid"=>$account["Account"]["ID"])) ?>">
+             href="<?php echo Router::url(array("controller"=>"accounts", "action"=>"photos", "accid"=>$account["Account"]["id"])) ?>">
             <i class="icon-eye-open"></i>
             <span>View All</span>
           </a>
@@ -160,6 +160,6 @@
     $('#fileupload').fileupload({
       // Uncomment the following to send cross-domain cookies:
       //xhrFields: {withCredentials: true},
-      url: '<?php echo Router::url(array("controller"=>"upload", "type"=>"account", "id"=>$account["Account"]["ID"])) ?>'
+      url: '<?php echo Router::url(array("controller"=>"upload", "type"=>"account", "id"=>$account["Account"]["id"])) ?>'
     });
   </script>

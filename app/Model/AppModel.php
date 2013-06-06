@@ -33,5 +33,5 @@ App::uses('Model', 'Model');
  */
 class AppModel extends Model {
 
-  public $primaryKey = 'ID';
+  public $primaryKey = 'id';
 }

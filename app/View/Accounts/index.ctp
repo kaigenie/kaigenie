@@ -19,7 +19,7 @@
       <?php foreach ($accounts as $account): ?>
         <tr>
           <td>
-            <?php echo $this->Html->link($account['Account']['name'], array('action' => 'view', $account['Account']['ID'])); ?>
+            <?php echo $this->Html->link($account['Account']['name'], array('action' => 'view', $account['Account']['id'])); ?>
           </td>
           <td>
             <?php echo $account['Account']['level_name'] ?>
@@ -40,7 +40,7 @@
                     array(
                       'controller' => 'accounts',
                       'action' => 'edit',
-                      'accid' => $account['Account']['ID']
+                      'accid' => $account['Account']['id']
                     ),
                     array('escape' => false)
                   ) ?>
@@ -51,7 +51,7 @@
                     array(
                       'controller' => 'upload',
                       'type' => 'account',
-                      'id' => $account['Account']['ID'],
+                      'id' => $account['Account']['id'],
                       "action" => "upload",
                     ),
                     array('escape' => false)
@@ -64,7 +64,7 @@
                     array(
                       'controller' => 'accounts',
                       'action' => 'detail',
-                      $account['Account']['ID']
+                      $account['Account']['id']
                     ),
                     array('escape' => false)
                   ) ?>
@@ -74,7 +74,7 @@
                     $this->Html->icon('icon-cogs icon-large',__('Setup Menus')),
                     array(
                       'controller' => 'accounts',
-                      'accid'=>$account['Account']['ID'],
+                      'accid'=>$account['Account']['id'],
                       'action' => 'menu'
                     ),
                     array('escape' => false)

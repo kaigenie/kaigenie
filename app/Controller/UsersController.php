@@ -186,7 +186,7 @@ class UsersController extends AppController{
 
         if($ready){
           $updateUser = $this->User->create();
-          $this->User->id = $loggedInUser['ID'];
+          $this->User->id = $loggedInUser['id'];
           $this->User->saveField('password', $newPwd);
           $this->Session->setFlash("Your Password had been changed", 'flash_alert');
         }

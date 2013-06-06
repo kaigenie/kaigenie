@@ -365,16 +365,16 @@ class CakeEmailTest extends CakeTestCase {
 	public function testMessageId() {
 		$this->CakeEmail->messageId(true);
 		$result = $this->CakeEmail->getHeaders();
-		$this->assertTrue(isset($result['Message-ID']));
+		$this->assertTrue(isset($result['Message-id']));
 
 		$this->CakeEmail->messageId(false);
 		$result = $this->CakeEmail->getHeaders();
-		$this->assertFalse(isset($result['Message-ID']));
+		$this->assertFalse(isset($result['Message-id']));
 
 		$result = $this->CakeEmail->messageId('<my-email@localhost>');
 		$this->assertSame($this->CakeEmail, $result);
 		$result = $this->CakeEmail->getHeaders();
-		$this->assertSame($result['Message-ID'], '<my-email@localhost>');
+		$this->assertSame($result['Message-id'], '<my-email@localhost>');
 
 		$result = $this->CakeEmail->messageId();
 		$this->assertSame($result, '<my-email@localhost>');
@@ -415,15 +415,15 @@ class CakeEmailTest extends CakeTestCase {
 		$this->CakeEmail->domain('example.org');
 		$result = $this->CakeEmail->getHeaders();
 		$expected = '@example.org>';
-		$this->assertTextContains($expected, $result['Message-ID']);
+		$this->assertTextContains($expected, $result['Message-id']);
 
 		$_SERVER['HTTP_HOST'] = 'example.org';
 		$result = $this->CakeEmail->getHeaders();
-		$this->assertTextContains('example.org', $result['Message-ID']);
+		$this->assertTextContains('example.org', $result['Message-id']);
 
 		$_SERVER['HTTP_HOST'] = 'example.org:81';
 		$result = $this->CakeEmail->getHeaders();
-		$this->assertTextNotContains(':81', $result['Message-ID']);
+		$this->assertTextNotContains(':81', $result['Message-id']);
 	}
 
 /**

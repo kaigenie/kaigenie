@@ -20,11 +20,11 @@ class Feature extends AppModel{
 
     $features = $this->find('all', array(
       'conditions'  => array('Feature.enabled' => true, 'Feature.is_deleted' => false),
-      'fields'      => array('Feature.ID', 'Feature.name')
+      'fields'      => array('Feature.id', 'Feature.name')
     ));
     $keyValues = array();
     foreach($features as $feature){
-      $key = $feature['Feature']['ID'];
+      $key = $feature['Feature']['id'];
       $value = $feature['Feature']['name'];
       $keyValues[$key] = $value;
     }
@@ -33,14 +33,14 @@ class Feature extends AppModel{
 
   public function getFeaturesWithAccountCount(){
     $result = $this->find('all', $query=array(
-      'fields' => array("Feature.ID", 'Feature.name', 'count(account_id) as cntAcc'),
+      'fields' => array("Feature.id", 'Feature.name', 'count(account_id) as cntAcc'),
       'joins' => array(
         array(
           'table'=>'accounts_features',
           'alias' => 'af',
           'type' => 'left',
           'conditions' => array(
-            'af.feature_id = Feature.ID'
+            'af.feature_id = Feature.id'
           )
         )
       ),
@@ -48,7 +48,7 @@ class Feature extends AppModel{
         'Feature.enabled'=>true,
         'Feature.is_deleted' => false
       ),
-      'group'  => array("Feature.ID", 'Feature.name'),
+      'group'  => array("Feature.id", 'Feature.name'),
       'order'  => array("Feature.name ASC")
     ));
 

@@ -16,7 +16,7 @@ class AccountImage extends AppModel{
       $saved = array();
       foreach($images as $image){
         $this->create();
-        $this->data["image_id"] = $image["Image"]["ID"];
+        $this->data["image_id"] = $image["Image"]["id"];
         $this->data["account_id"] = $accountId;
 
         $saved[] = $this->save($this->data);

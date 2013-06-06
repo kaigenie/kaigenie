@@ -73,7 +73,7 @@
         'placeholder' => __('Currency'),
         'class'       => 'span2'
       ));
-      echo $this->Form->hidden('account_id' ,array("value" => $account['Account']['ID']));
+      echo $this->Form->hidden('account_id' ,array("value" => $account['Account']['id']));
       echo $this->Form->hidden('menu_id', array("id"=>"menu_id"));
       ?>
     </div>

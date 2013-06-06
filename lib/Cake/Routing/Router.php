@@ -99,7 +99,7 @@ class Router {
 		'Year' => Router::YEAR,
 		'Month' => Router::MONTH,
 		'Day' => Router::DAY,
-		'ID' => Router::ID,
+		'id' => Router::ID,
 		'UUID' => Router::UUID
 	);
 

@@ -13,13 +13,13 @@ class ItemImage extends AppModel{
 
   public function saveImages($images = array(), $savedMenu = null){
 
-    $itemId = $savedMenu['MenuItem']['ID'];
+    $itemId = $savedMenu['MenuItem']['id'];
 
     if(!empty($images)){
       $saved = array();
       foreach($images as $image){
         $this->create();
-        $this->data["image_id"] = $image["Image"]["ID"];
+        $this->data["image_id"] = $image["Image"]["id"];
         $this->data["item_id"] = $itemId;
         $saved[] = $this->save($this->data);
       }

@@ -33,7 +33,7 @@
     <?php endif; ?>
 
     <li>
-      <a data-menu-id="<?php echo $menu['ID'];?>" class="btn btn-danger btn-add-menu-item"> Add an Item</a>
+      <a data-menu-id="<?php echo $menu['id'];?>" class="btn btn-danger btn-add-menu-item"> Add an Item</a>
     </li>
   </ul>
 

@@ -47,7 +47,7 @@ class Image extends AppModel{
 
 
       foreach($results as $key=>$image){
-        list($imageID,$fileName,$fileSize) = array($image['ID'],$image['name'],$image['size']);
+        list($imageID,$fileName,$fileSize) = array($image['id'],$image['name'],$image['size']);
         list($uniqueName, $relativePath) = array($image['unique_name'], $image['relative_path']);
         foreach ($versions as $version => $options) {
           if (!empty($version)) {
@@ -56,7 +56,7 @@ class Image extends AppModel{
           }
         }
         $newImage = array_merge($newImage,array(
-          'ID'   => $imageID,
+          'id'   => $imageID,
           'name' => $fileName,
           'size' => $fileSize,
           'fill' => true // afterFind will be called twice, this flag is used to make sure it doesn't broken

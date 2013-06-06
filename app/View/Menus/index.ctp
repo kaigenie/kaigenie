@@ -11,7 +11,7 @@
           $this->Html->icon('icon-plus',__('Add Menu')),
           array(
             'controller' => 'menus',
-            'accid' => $account['Account']['ID'],
+            'accid' => $account['Account']['id'],
             'action' => 'add'
           ),
           array('escape' => false ,'class'=>'btn add-menu')
@@ -26,16 +26,16 @@
       ?>
       <ul class="nav nav-tabs" id="menu-tab">
         <?php foreach($allAccountMenus as $menuKey => $menu): ?>
-        <li class="<?php if($firstMenu['ID'] == $menu['ID']):  echo "active"; endif;?>">
-          <a data-menu-name="<?php echo $menu['name'] ?>" href="#tabcon<?php echo $menu['ID'];?>" data-toggle="tab"><?php echo $menu['name'] ?></a>
+        <li class="<?php if($firstMenu['id'] == $menu['id']):  echo "active"; endif;?>">
+          <a data-menu-name="<?php echo $menu['name'] ?>" href="#tabcon<?php echo $menu['id'];?>" data-toggle="tab"><?php echo $menu['name'] ?></a>
         </li>
-          <?php if($menu['ID'] == $lastMenu['ID']): // ID is unique to identify a menu?>
+          <?php if($menu['id'] == $lastMenu['id']): // id is unique to identify a menu?>
             <li>
               <?php echo $this->UI->link(
                 $this->Html->icon('icon-plus',__('Add Menu')),
                 array(
                   'controller' => 'menus',
-                  'accid' => $account['Account']['ID'],
+                  'accid' => $account['Account']['id'],
                   'action' => 'add'
                 ),
                 array('escape' => false ,'class'=>'add-menu')
@@ -48,7 +48,7 @@
       <div id="menu-item-content" class="tab-content">
 
         <?php foreach($allAccountMenus as $menuKey => $menu): ?>
-          <div class="tab-pane fade <?php if($firstMenu['ID'] == $menu['ID']):  echo "in active"; endif;?>" id="tabcon<?php echo $menu['ID'];?>">
+          <div class="tab-pane fade <?php if($firstMenu['id'] == $menu['id']):  echo "in active"; endif;?>" id="tabcon<?php echo $menu['id'];?>">
             <?php echo $this->element("menu_item_content", array("menu"=>$menu)) ?>
           </div>
         <?php endforeach;?>

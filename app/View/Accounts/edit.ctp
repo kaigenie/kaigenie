@@ -256,7 +256,7 @@
           'placeholder' => __('Username'),
           'class'       => 'span8'
         ));
-        echo $this->Form->hidden('account_id' ,array("value" => $this->data['Account']['ID']));
+        echo $this->Form->hidden('account_id' ,array("value" => $this->data['Account']['id']));
       ?>
     </div>
     <div class="controls controls-row">

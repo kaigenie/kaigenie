@@ -41,7 +41,7 @@ class AppInitShell extends AppShell{
       ));
 
       $this->User->save();
-      print_r("End creating super administrator with ID " .$this->User->getID() );
+      print_r("End creating super administrator with id " .$this->User->getID() );
     }
   }
 
@@ -59,10 +59,10 @@ class AppInitShell extends AppShell{
     $groupNames = Group::$USER_GROUP_NAMES;
     foreach($groupNames as $key => $groupName){
       if(!$this->Group->exists($key)){
-        $this->Group->create(array('ID' => $key, 'name' => $groupName,  'description' => $groupName));
+        $this->Group->create(array("id" => $key, 'name' => $groupName,  'description' => $groupName));
         $this->Group->save();
       }else{
-        $this->Group->ID = $key;
+        $this->Group->id = $key;
         $this->Group->create(array('name' => $groupName,  'description' => $groupName));
       }
     }
@@ -81,7 +81,7 @@ class AppInitShell extends AppShell{
     if (!$root) {
       $aco->create(array('parent_id' => null, 'model' => null, 'alias' => 'controllers'));
       $root = $aco->save();
-      $root['Aco']['id'] = $aco->id;
+      $root['Aco']["id"] = $aco->id;
       $log[] = 'Created Aco node for controllers';
     } else {
       $root = $root[0];

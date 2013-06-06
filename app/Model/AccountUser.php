@@ -18,14 +18,14 @@ class AccountUser extends AppModel{
   /**
    * Get all users based on accountID
    *
-   * @param $accountId Account ID
+   * @param $accountId Account id
    * @return all account users
    */
   public function getAccountAdmin($accountId){
     $accountAdmins = $this->find('all', $query = array(
       'conditions'  => array('AccountUser.account_id' => $accountId),
       'fields'      => array(
-        'User.ID',
+        'User.id',
         'User.username'
       ),
       'order'       => array(

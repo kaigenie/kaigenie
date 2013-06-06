@@ -97,7 +97,7 @@ class Account extends AppModel{
    * @return mixed|void
    */
   public function saveAll($data = array(), $options = array()){
-    $accountId = $data['Account']['ID'];
+    $accountId = $data['Account']['id'];
     if(isset($accountId)){
       $this->AccountFeature->deleteAll(array(
         'account_id' => $accountId
@@ -116,7 +116,7 @@ class Account extends AppModel{
       $this->recursive = -1;
     }
     $query = array_merge(array(
-      'conditions' => array('Account.ID = ' => $accountId),
+      'conditions' => array('Account.id = ' => $accountId),
     ),$query);
     return $this->find('first',$query);
 
@@ -132,22 +132,22 @@ class Account extends AppModel{
 
     $account = $this->find('first', array(
       'fields' => array(
-        'Account.ID', 'Account.name', 'Account.type'
+        'Account.id', 'Account.name', 'Account.type'
       ),
-      'conditions' => array('Account.ID = ' => $accountId),
+      'conditions' => array('Account.id = ' => $accountId),
       'contain' => array(
         'Menu' => array(
           'fields' => array(
-            'Menu.ID', 'Menu.name'
+            'Menu.id', 'Menu.name'
           ),
           'MenuItem' => array(
             'fields'=>array(
-              'MenuItem.ID','MenuItem.name','MenuItem.description',
+              'MenuItem.id','MenuItem.name','MenuItem.description',
               'MenuItem.price','MenuItem.symbol',
             ),
             'ItemPortrait' => array(
               'fields' => array(
-                'ItemPortrait.ID',
+                'ItemPortrait.id',
                 'ItemPortrait.name',
                 'ItemPortrait.size',
                 'ItemPortrait.unique_name',
@@ -169,10 +169,10 @@ class Account extends AppModel{
       'contain' => 'AccountImage',
 
       'fields' => array(
-        'Account.ID', 'Account.name','img.ID','img.name','img.size', 'img.relative_path'
+        'Account.id', 'Account.name','img.id','img.name','img.size', 'img.relative_path'
       ),
       'conditions' => array(
-        'Account.ID' => $accountId
+        'Account.id' => $accountId
       ),
       'joins' => array(
         array(
@@ -180,7 +180,7 @@ class Account extends AppModel{
           'alias' => 'ai',
           'type' => 'left',
           'conditions' => array(
-            'ai.account_id = Account.ID'
+            'ai.account_id = Account.id'
           )
         ),
         array(
@@ -206,11 +206,11 @@ class Account extends AppModel{
     $query = array(
       'contain' => 'Image',
       'fields' => array(
-        'Account.ID', 'Account.name'
+        'Account.id', 'Account.name'
       ),
 
       'conditions' => array(
-        'Account.ID' => $accountId
+        'Account.id' => $accountId
       ),
     );
 
@@ -224,7 +224,7 @@ class Account extends AppModel{
    * This function server as /account/detail/1234 page which display most of the account information. For instance,
    * uploaded photos, Category and Feature info.
    *
-   * @param null $accId Account ID passed by URL
+   * @param null $accId Account id passed by URL
    * @return array Return Account Detail information
    */
   public function getDetail($accId = null){
@@ -236,7 +236,7 @@ class Account extends AppModel{
         'Feature', 'Category'
       ),
       'conditions'  => array(
-        'Account.ID' => $accId
+        'Account.id' => $accId
       )
     ));
 

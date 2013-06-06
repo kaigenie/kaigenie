@@ -713,9 +713,9 @@ class CakeEmail {
 		}
 		if ($this->_messageId !== false) {
 			if ($this->_messageId === true) {
-				$headers['Message-ID'] = '<' . str_replace('-', '', String::UUID()) . '@' . $this->_domain . '>';
+				$headers['Message-id'] = '<' . str_replace('-', '', String::UUID()) . '@' . $this->_domain . '>';
 			} else {
-				$headers['Message-ID'] = $this->_messageId;
+				$headers['Message-id'] = $this->_messageId;
 			}
 		}
 

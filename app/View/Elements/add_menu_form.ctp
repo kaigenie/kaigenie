@@ -20,7 +20,7 @@
         'placeholder' => __('Menu Name'),
         'class'       => 'span8'
       ));
-      echo $this->Form->hidden('account_id' ,array("value" => $account['Account']['ID']));
+      echo $this->Form->hidden('account_id' ,array("value" => $account['Account']['id']));
       ?>
     </div>
   </div>

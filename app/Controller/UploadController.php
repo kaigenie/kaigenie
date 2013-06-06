@@ -45,7 +45,7 @@ class UploadController extends AppController{
 
     }else{
       $this->set("account", $this->Account->findById($account_id, true, array(
-        'fields' => array('Account.ID', 'Account.name')
+        'fields' => array('Account.id', 'Account.name')
       )));
       $this->render("/Upload/acc_img");
     }

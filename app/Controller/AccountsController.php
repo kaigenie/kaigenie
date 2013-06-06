@@ -136,7 +136,7 @@ class AccountsController extends AppController
     // Do not fetch unnecessary data
     $this->Paginator->settings = array(
       'recursive' => -1,
-      'fields' => array('Account.ID', 'Account.name', 'Account.level', 'Account.level_name',
+      'fields' => array('Account.id', 'Account.name', 'Account.level', 'Account.level_name',
                         'Account.type', 'Account.type_name'),
       'limit' => 5,
       'order' => array(
@@ -153,7 +153,7 @@ class AccountsController extends AppController
       throw new NotFoundException("System can't find a account");
     }
     if($this->request->is('put') && !empty($this->request->data)){
-      $this->request->data['Account']['ID'] = $id;
+      $this->request->data['Account']["id"] = $id;
       $this->_prepareGenData();
       $this->_prepareFeatures();
       $this->_prepareCategories();
@@ -191,7 +191,7 @@ class AccountsController extends AppController
    *
    * This will render and display all of the account uploaded related images. it severs /accounts/1234/photos
    *
-   * @param $accid Account ID
+   * @param $accid Account id
    */
   public function photos($accid){
 
@@ -203,7 +203,7 @@ class AccountsController extends AppController
   /**
    * Get Account Details information
    *
-   * @param $accid Account ID
+   * @param $accid Account id
    */
   public function detail($accid){
     $account = $this->Account->getDetail($accid);
