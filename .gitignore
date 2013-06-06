@@ -1,6 +1,11 @@
 # User specific & automatically generated files #
 #################################################
 
+/lib/Cake/Console/Templates/skel/tmp/
+/vendors
+/build
+/dist
+/tags
 
 # OS generated files #
 ######################
