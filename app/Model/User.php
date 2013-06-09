@@ -10,6 +10,8 @@ App::uses('AuthComponent', 'Controller/Component');
 
 class User extends AppModel{
 
+  public $displayField = 'username';
+
   public $belongsTo = array('Group');
   public $hasMany = array('AccountUser');
   public $actsAs = array('Acl' => array('type' => 'requester'));

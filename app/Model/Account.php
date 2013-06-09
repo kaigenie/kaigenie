@@ -72,7 +72,8 @@ class Account extends AppModel{
     'AccountCategory',
     'AccountUser',
     'AccountImage',
-    'Menu'
+    'Menu',
+    'Review'
   );
 
 

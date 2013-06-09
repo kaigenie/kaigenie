@@ -47,6 +47,14 @@ class Image extends AppModel{
 
 
       foreach($results as $key=>$image){
+
+        if(isset($image['Image'])){
+          $image = $image['Image'];
+          if(!isset($image['id'])){
+            break;
+          }
+        }
+
         list($imageID,$fileName,$fileSize) = array($image['id'],$image['name'],$image['size']);
         list($uniqueName, $relativePath) = array($image['unique_name'], $image['relative_path']);
         foreach ($versions as $version => $options) {

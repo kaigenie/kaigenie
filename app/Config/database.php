@@ -72,8 +72,8 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'ethan',
 		'password' => 'P@ssword1',
-		'database' => 'kaigenie',
-		'prefix' => 'test_',
+		'database' => 'test_kaigenie',
+		'prefix' => '',
 		//'encoding' => 'utf8',
 	);
 }

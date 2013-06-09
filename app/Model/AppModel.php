@@ -22,7 +22,7 @@
  */
 
 App::uses('Model', 'Model');
-
+App::uses('Constant', 'Model');
 /**
  * Application model for Cake.
  *
@@ -34,4 +34,6 @@ App::uses('Model', 'Model');
 class AppModel extends Model {
 
   public $primaryKey = 'id';
+
+
 }

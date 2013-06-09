@@ -66,5 +66,17 @@
               array('escape' => false)
             ) ?>
           </li>
+
+          <li class="divider"></li>
+          <li>
+            <?php echo $this->Html->link(
+              $this->Html->icon('icon-comment icon-large',__('Reviews')),
+              array(
+                'controller' => 'reviews',
+                'action' => 'approval'
+              ),
+              array('escape' => false)
+            ) ?>
+          </li>
         </ul>
 </div>
