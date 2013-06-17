@@ -24,6 +24,7 @@ class ReviewsController extends AppController {
     $accountsHaveReview = $this->Review->findReviewCount();
 
     $this->set("accounts", $accountsHaveReview);
+    $this->set("pagevar", array("accid"=>'', "rs"=>''));
 
     $this->render('approval');
   }

@@ -160,9 +160,6 @@
                 }
                 ?>
 
-
-
-
               </div>
             </li>
           <?php endforeach; ?>
