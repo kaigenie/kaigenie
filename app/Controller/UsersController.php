@@ -194,7 +194,7 @@ class UsersController extends AppController{
 
         $this->data = $_POST;
       }
-      $this->render('/users/chgpsw');
+      $this->render('chgpsw');
 
     }
   }

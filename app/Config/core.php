@@ -329,6 +329,12 @@ if (Configure::read('debug') > 0) {
 // Prefix each application on the same server with a different string, to avoid Memcache and APC conflicts.
 $prefix = 'myapp_';
 
+// add by Ethan on June 22 to fix permission denied on Ubuntu
+Cache::config('default', array(
+  'engine' => 'File',
+  'mask' => 0666,
+));
+
 /**
  * Configure the cache used for general framework caching. Path information,
  * object listings, and translation cache files are stored with this configuration.
